@@ -104,4 +104,12 @@ namespace ft {
 		size_t _sz;
 		size_t _cp;
 	};
+
+	template<class Allocator>
+	class vector<bool, Allocator> {
+	public:
+		void hello() const {
+			std::cout << "this is vector<bool>" << std::endl;
+		}
+	};
 }

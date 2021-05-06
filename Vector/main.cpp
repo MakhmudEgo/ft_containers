@@ -23,7 +23,9 @@ int main() {
 //	std::allocator<int> al;
 //	al.()
 
+	ft::vector<bool> gg;
 
+	gg.hello();
 	return 0;
 
 }
