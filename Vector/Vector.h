@@ -101,7 +101,9 @@ namespace ft {
 			for (size_t i = 0; i < _sz; ++i) {
 				_alloc.destroy(_pVector + i);
 			}
-			_alloc.deallocate(_pVector, _cp);
+			if (_sz) {
+				_alloc.deallocate(_pVector, _cp);
+			}
 			_pVector = newVector;
 			_cp = new_cap;
 		}
