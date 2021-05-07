@@ -24,15 +24,10 @@ class LegacyRandomAccessIterator : public Iterator<T> {
 public:
 	LegacyRandomAccessIterator( T* i ) : Iterator<T>(i) {}
 	LegacyRandomAccessIterator( std::__1::__wrap_iter<T*> i) : Iterator<T>(i) {}
-	void hello() {
 
-	}
 	T* operator++(int) {
-		this->_i++;
-		return *this->_i;
+		T* old = this->_i++;
+		return old;
 	}
-	const T* operator++() {
-		this->_i++;
-		return *this->_i;
-	}
+
 };

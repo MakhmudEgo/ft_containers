@@ -7,33 +7,6 @@
 #include <memory>
 #include "Iterator.h"
 
-/*template<class T>
-class LegacyRandomAccessIterator{
-public:
-	LegacyRandomAccessIterator( T* i ) : _i(i) {}
-	LegacyRandomAccessIterator( std::__1::__wrap_iter<T*> i) : _i( &( *i ) ) {}
-	void hello() {
-
-	}
-	T& operator*() { return *_i; }
-	const T& operator*() const { return *_i; }
-
-	T& operator++(int) {
-		_i++;
-		return *_i;
-	}
-	T& operator++() {
-		_i++;
-		return *_i;
-	}
-*//*	const T& operator++(int) {
-		_i++;
-		return _i;
-	}*//*
-
-private:
-	T* _i;
-};*/
 namespace ft {
 	template<
 			class T,

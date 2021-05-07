@@ -10,7 +10,7 @@
 #include "overloadNewAndDelete.h"
 
 int main() {
-	ft::vector<int> hello(5, 1234);
+/*	ft::vector<int> hello(5, 1234);
 //	hello.clear();
 
 
@@ -43,9 +43,8 @@ int main() {
 
 //	auto it = hello.begin();
 	ft::vector<bool> gg;
-	gg.hello();
-/*
-	std::vector<int> vector(4,4);
+	gg.hello();*/
+/*	std::vector<int> vector(4,4);
 
 	std::iota(vector.begin(), vector.end(), 1);
 	std::vector<int>::iterator it = vector.begin();
@@ -64,6 +63,29 @@ int main() {
 	std::cout << vector[1] << std::endl;
 	std::cout << vector[2] << std::endl;
 	std::cout << vector[3] << std::endl;*/
+
+	std::vector<int> vector(4,4);
+
+	for (int i = 1; i < 5; ++i) {
+		vector[i - 1] = i;
+	}
+//	std::iota(vector.begin(), vector.end(), 1);
+	std::vector<int>::iterator it = vector.begin();
+
+	*it++ = 44;
+	std::cout << *it++ << std::endl;
+	std::cout << vector[0] << std::endl;
+	std::cout << vector[1] << std::endl;
+	std::cout << vector[2] << std::endl;
+	std::cout << vector[3] << std::endl;
+	std::cout << *it << std::endl;
+
+	std::cout << "-------------" << std::endl;
+
+	std::cout << vector[0] << std::endl;
+	std::cout << vector[1] << std::endl;
+	std::cout << vector[2] << std::endl;
+	std::cout << vector[3] << std::endl;
 
 	return 0;
 
