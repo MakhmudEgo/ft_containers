@@ -5,7 +5,35 @@
 #pragma once
 
 #include <memory>
+#include "Iterator.h"
 
+/*template<class T>
+class LegacyRandomAccessIterator{
+public:
+	LegacyRandomAccessIterator( T* i ) : _i(i) {}
+	LegacyRandomAccessIterator( std::__1::__wrap_iter<T*> i) : _i( &( *i ) ) {}
+	void hello() {
+
+	}
+	T& operator*() { return *_i; }
+	const T& operator*() const { return *_i; }
+
+	T& operator++(int) {
+		_i++;
+		return *_i;
+	}
+	T& operator++() {
+		_i++;
+		return *_i;
+	}
+*//*	const T& operator++(int) {
+		_i++;
+		return _i;
+	}*//*
+
+private:
+	T* _i;
+};*/
 namespace ft {
 	template<
 			class T,
@@ -13,6 +41,21 @@ namespace ft {
 	>
 	class vector {
 	public:
+		// ***** iter ***** //
+		typedef LegacyRandomAccessIterator<T> iterator;
+		typedef const LegacyRandomAccessIterator<T> const_iterator;
+
+		iterator begin() { return _pVector; }
+		const_iterator begin() const { return _pVector; }
+
+		iterator end() { return _pVector + _sz; }
+		const_iterator end() const { return _pVector + _sz; }
+
+
+
+
+
+
 		explicit vector( const Allocator &alloc = Allocator() )
 				: _pVector( 0x0 ), _alloc( alloc ), _sz( 0 ), _cp( 0 ) {}
 
