@@ -7,7 +7,8 @@
 #include <algorithm>
 #include <numeric>
 #include <vector>
-#include "overloadNewAndDelete.h"
+//#include "overloadNewAndDelete.h"
+#include "unit_tests_vector.hpp"
 
 int main() {
 /*	ft::vector<int> hello(5, 1234);
@@ -44,48 +45,13 @@ int main() {
 //	auto it = hello.begin();
 	ft::vector<bool> gg;
 	gg.hello();*/
-/*	std::vector<int> vector(4,4);
 
-	std::iota(vector.begin(), vector.end(), 1);
-	std::vector<int>::iterator it = vector.begin();
+	{
+		TestRunner tr;
 
-//	*it = 3;
-	std::cout << *it++ << std::endl;
-	std::cout << vector[0] << std::endl;
-	std::cout << vector[1] << std::endl;
-	std::cout << vector[2] << std::endl;
-	std::cout << vector[3] << std::endl;
-	std::cout << *it << std::endl;
-
-	std::cout << "-------------" << std::endl;
-
-	std::cout << vector[0] << std::endl;
-	std::cout << vector[1] << std::endl;
-	std::cout << vector[2] << std::endl;
-	std::cout << vector[3] << std::endl;*/
-
-	std::vector<int> vector(4,4);
-
-	for (int i = 1; i < 5; ++i) {
-		vector[i - 1] = i;
+		tr.RunTest(unit_tests_vector, "df");
 	}
-//	std::iota(vector.begin(), vector.end(), 1);
-	std::vector<int>::iterator it = vector.begin();
 
-	*it++ = 44;
-	std::cout << *it++ << std::endl;
-	std::cout << vector[0] << std::endl;
-	std::cout << vector[1] << std::endl;
-	std::cout << vector[2] << std::endl;
-	std::cout << vector[3] << std::endl;
-	std::cout << *it << std::endl;
-
-	std::cout << "-------------" << std::endl;
-
-	std::cout << vector[0] << std::endl;
-	std::cout << vector[1] << std::endl;
-	std::cout << vector[2] << std::endl;
-	std::cout << vector[3] << std::endl;
 
 	return 0;
 
