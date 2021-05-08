@@ -65,7 +65,14 @@ namespace ft {
 
 		void resize( size_t count, T value = T() ) {
 			if (count > _cp) {
-				reserve(count);
+				size_t possible_size = _cp;
+				if (_cp * 2 > count) {
+					while (possible_size < count) {
+						possible_size *= 2;
+					}
+				}
+				reserve(count > possible_size ? count : possible_size);
+
 				for (size_t i = _sz; i < count; ++i) {
 					_alloc.construct(_pVector + i, value);
 				}
