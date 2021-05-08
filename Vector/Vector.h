@@ -65,11 +65,7 @@ namespace ft {
 
 		void resize( size_t count, T value = T() ) {
 			if (count > _cp) {
-				size_t tmp = _cp;
-				while (tmp < count) {
-					tmp *= 2;
-				}
-				reserve(tmp);
+				reserve(count);
 				for (size_t i = _sz; i < count; ++i) {
 					_alloc.construct(_pVector + i, value);
 				}
@@ -101,7 +97,7 @@ namespace ft {
 			for (size_t i = 0; i < _sz; ++i) {
 				_alloc.destroy(_pVector + i);
 			}
-			if (_sz) {
+			if (_cp) {
 				_alloc.deallocate(_pVector, _cp);
 			}
 			_pVector = newVector;
