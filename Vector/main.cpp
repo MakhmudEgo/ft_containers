@@ -6,7 +6,9 @@
 
 //#include "unit_tests_vector.hpp"
 #include "unit_test_iterator.hpp"
+#include "unit_test_size.hpp"
 #include "test_runner.h"
+#include <numeric>
 
 int main() {
 	{
@@ -16,5 +18,4 @@ int main() {
 		tr.RunTest(unit_test_iterator, "iterator");
 	}
 	return 0;
-
 }
