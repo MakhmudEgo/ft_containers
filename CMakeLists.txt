@@ -3,7 +3,14 @@ project(ft_containers)
 
 set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra")
-include_directories(. Iterator test_runner)
+
+include_directories(.
+        Iterator
+        test_runner
+        Vector
+        Vector/unit_tests_vector
+        )
+
 add_executable(ft_containers
         main.cpp)
 
