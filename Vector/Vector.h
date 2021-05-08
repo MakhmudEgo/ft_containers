@@ -130,7 +130,7 @@ namespace ft {
 	class vector<bool, Allocator> {
 	public:
 		void hello() const {
-			std::cout << "this is vector<bool>" << std::endl;
+//			std::cout << "this is vector<bool>" << std::endl;
 		}
 	};
 }

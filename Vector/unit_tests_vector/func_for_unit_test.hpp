@@ -4,13 +4,16 @@
 
 #pragma once
 
+#include <iostream>
+
+
 template<typename T>
 std::ostream& PrintV(T& v, std::ostream& os) {
 	for (size_t i = 0; i < v.size(); ++i) {
 		if (i) {
-			os << ' ';
+			os << "; ";
 		}
-		os << "index - " << i << ": " << v[i];
+		os << "v[" << i << "] = " << v[i];
 	}
 	os << std::endl;
 	return os;

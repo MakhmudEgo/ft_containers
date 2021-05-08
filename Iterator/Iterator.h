@@ -25,9 +25,24 @@ public:
 	LegacyRandomAccessIterator( T* i ) : Iterator<T>(i) {}
 	LegacyRandomAccessIterator( std::__1::__wrap_iter<T*> i) : Iterator<T>(i) {}
 
+	// ***** post inc ***** //
 	T* operator++(int) {
-		T* old = this->_i++;
-		return old;
+		return this->_i++;
+	}
+
+	// ***** pre inc ***** //
+	T* operator++() {
+		return ++this->_i;
+	}
+
+	// ***** post inc ***** //
+	T* operator--(int) {
+		return this->_i--;
+	}
+
+	// ***** post dec ***** //
+	T* operator--() {
+		return --this->_i;
 	}
 
 };

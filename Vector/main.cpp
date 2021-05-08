@@ -4,8 +4,9 @@
 
 //#include "overloadNewAndDelete.h"
 
-#include "unit_tests_vector.hpp"
+//#include "unit_tests_vector.hpp"
 #include "unit_test_iterator.hpp"
+#include "test_runner.h"
 
 int main() {
 	{
