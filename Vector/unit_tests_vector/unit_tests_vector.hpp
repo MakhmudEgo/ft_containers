@@ -3,11 +3,12 @@
 //
 #pragma once
 
-#include <vector>
 #include "test_runner.h"
+#include "func_for_unit_test.hpp"
+#include "unit_test_size.hpp"
+#include <vector>
 #include <sstream>
 #include <iostream>
-
 
 #define BaseTest(field) \
 { \
@@ -68,3 +69,4 @@ void unit_tests_vector() {
 		ASSERT_EQUAL(x, y);
 	}
 }
+
