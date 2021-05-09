@@ -15,7 +15,7 @@ public:
 
 //	virtual T& operator++();
 
-//protected:
+protected:
 	T* _i;
 };
 
@@ -26,20 +26,26 @@ public:
 	LegacyRandomAccessIterator( std::__1::__wrap_iter<T*> i) : Iterator<T>(i) {}
 
 	// ***** post inc ***** //
-	T* operator++(int) { return this->_i++; }
-
+	LegacyRandomAccessIterator& operator++(int) {
+		LegacyRandomAccessIterator old(this->_i++);// TODO:: need fix
+		return old;
+	}
+//
 	// ***** pre inc ***** //
-	T* operator++() { return ++this->_i; }
+	LegacyRandomAccessIterator& operator++() {
+		++this->_i;
+		return *this;
+	}
 
 	// ***** post inc ***** //
-	T* operator--( int ) { return this->_i--; }
+	LegacyRandomAccessIterator& operator--( int ) { return this->_i--; }
 
 	// ***** post dec ***** //
-	T* operator--() { return --this->_i; }
+	LegacyRandomAccessIterator& operator--() { return --this->_i; }
 
 	// ***** [] ***** //
-	T& operator[](int n) { return this->_i[n]; }
-	const T& operator[](int n) const { return this->_i[n]; }
+	T& operator[](int n) { return this->_i[ n ]; }
+	const T& operator[](int n) const { return this->_i[ n ]; }
 
 	// ***** + && - ***** //
 	T* operator+(int n) { return this->_i + n; }

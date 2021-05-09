@@ -6,6 +6,7 @@
 
 #include <vector>
 #include "Vector.h"
+#include "sstream"
 
 #define UNIT_SIZE_INIT_SS \
 	svRes << "size: " << sv.size() << std::endl \
