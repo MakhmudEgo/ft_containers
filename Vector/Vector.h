@@ -6,6 +6,7 @@
 
 #include <memory>
 #include "Iterator.h"
+#include <iostream>
 
 namespace ft {
 	template<
@@ -70,9 +71,22 @@ namespace ft {
 			default_init(count, value);
 		}
 
-/*		template< class InputIt >
-		void assign( InputIt first, InputIt last ) {
+		void assign( RandomAccess<T> first, RandomAccess<T> last ) {
+			reserve( last - first );
+			_sz = last - first;
 
+			for (size_t i = 0; first != last; ++first, i++) {
+				_alloc.construct(this->_pVector + i, *first);
+			}
+		}
+/*		template< typename InputIt >
+		void assign( InputIt first, InputIt last) {
+			reserve( last - first );
+			_sz = last - first;
+
+			for (size_t i = 0; first != last; ++first, i++) {
+				_alloc.construct(this->_pVector + i, *first);
+			}
 		}*/
 
 		size_t size() const {

@@ -20,9 +20,17 @@ int main() {
 //		tr.RunTest(unit_tests_vector, "base test");
 //		tr.RunTest(unit_size, "Size");
 //		tr.RunTest(unit_test_iterator, "iterator");
-		tr.RunTest(unit_test_assign, "assign");//
+//		tr.RunTest(unit_test_assign, "assign");/
 	}
 
 
+	ft::vector<int> v(15,5);
+
+	ft::vector<int> v1;
+	ft::vector<int>::iterator it1 = v.begin();
+	std::cout << *it1 << std::endl;
+	v1.assign(v.begin(), v.end());
+	std::cout << v1.capacity() << std::endl;
+	PrintV(v1, std::cout);
 	return 0;
 }

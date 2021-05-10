@@ -40,7 +40,7 @@ public:
 
 	// ***** post inc ***** //
 	iterator_type operator++( int ) {
-		return RandomAccess( this->_i++ );
+		return iterator_type( this->_i++ );
 	}
 
 	// ***** pre inc ***** //
@@ -51,7 +51,7 @@ public:
 
 	// ***** post inc ***** //
 	iterator_type operator--( int ) {
-		return RandomAccess( this->_i-- );
+		return iterator_type( this->_i-- );
 	}
 
 	// ***** post dec ***** //
@@ -65,12 +65,15 @@ public:
 	const_reference operator[]( int n ) const { return this->_i[ n ]; }
 
 	// ***** + && - ***** //
-	pointer operator+( int n ) { return this->_i + n; }
-	pointer operator-( int n ) { return this->_i - n; }
+	iterator_type operator+( int n ) { return iterator_type(this->_i + n); }
+	iterator_type operator-( int n ) { return iterator_type(this->_i - n); }
+
+	difference_type operator+( const iterator_type& other ) { return this->_i + other._i; }
+	difference_type operator-( const iterator_type& other ) { return this->_i - other._i; }
 
 	// ***** += && -= ***** //
-	pointer operator+=( int n ) { return this->_i += n; }
-	pointer operator-=( int n ) { return this->_i -= n; }
+	iterator_type operator+=( int n ) { return this->_i += n; }
+	iterator_type operator-=( int n ) { return this->_i -= n; }
 
 	// ***** > && < ***** //
 	bool operator>( const iterator_type& other ) { return this->_i > other._i; }
