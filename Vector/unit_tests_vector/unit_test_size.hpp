@@ -8,11 +8,7 @@
 #include "Vector.h"
 #include "sstream"
 
-#define UNIT_SIZE_INIT_SS \
-	svRes << "size: " << sv.size() << std::endl \
-	<< "capacity: " << sv.capacity() << std::endl; \
-	mvRes << "size: " << mv.size() << std::endl \
-	<< "capacity: " << mv.capacity() << std::endl;
+#include "func_for_unit_test.hpp"
 
 void unit_size() {
 	{
