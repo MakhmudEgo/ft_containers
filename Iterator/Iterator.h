@@ -7,63 +7,85 @@
 template<class T>
 class Iterator {
 public:
+	typedef T				value_type;
+	typedef std::ptrdiff_t	difference_type;
+	typedef T*				pointer;
+	typedef T&				reference;
+	typedef const T&		const_reference;
+
+
 	Iterator(T* i) : _i( i ) {}
 	Iterator( std::__1::__wrap_iter<T*> i) : _i( &( *i ) ) {}
 
-	T& operator*() { return *_i; }
-	const T& operator*() const { return *_i; }
-
-//	virtual T& operator++();
+	reference operator*() { return *_i; }
+	const_reference operator*() const { return *_i; }
 
 protected:
 	T* _i;
 };
 
 template<class T>
-class LegacyRandomAccessIterator : public Iterator<T> {
+class RandomAccess : public Iterator<T> {
 public:
-	LegacyRandomAccessIterator( T* i ) : Iterator<T>(i) {}
-	LegacyRandomAccessIterator( std::__1::__wrap_iter<T*> i) : Iterator<T>(i) {}
+	typedef T				value_type;
+	typedef std::ptrdiff_t	difference_type;
+	typedef T*				pointer;
+	typedef T&				reference;
+	typedef const T&		const_reference;
+	typedef RandomAccess	iterator_type;
+
+
+	RandomAccess( T* i ) : Iterator< T >( i ) {}
+	RandomAccess( std::__1::__wrap_iter< T* > i) : Iterator< T >( i ) {}
 
 	// ***** post inc ***** //
-	LegacyRandomAccessIterator& operator++(int) {
-		LegacyRandomAccessIterator old(this->_i++);// TODO:: need fix
-		return old;
+	iterator_type operator++( int ) {
+		return RandomAccess( this->_i++ );
 	}
-//
+
 	// ***** pre inc ***** //
-	LegacyRandomAccessIterator& operator++() {
+	iterator_type& operator++() {
 		++this->_i;
 		return *this;
 	}
 
 	// ***** post inc ***** //
-	LegacyRandomAccessIterator& operator--( int ) { return this->_i--; }
+	iterator_type operator--( int ) {
+		return RandomAccess( this->_i-- );
+	}
 
 	// ***** post dec ***** //
-	LegacyRandomAccessIterator& operator--() { return --this->_i; }
+	iterator_type& operator--() {
+		--this->_i;
+		return *this;
+	}
 
 	// ***** [] ***** //
-	T& operator[](int n) { return this->_i[ n ]; }
-	const T& operator[](int n) const { return this->_i[ n ]; }
+	reference operator[]( int n ) { return this->_i[ n ]; }
+	const_reference operator[]( int n ) const { return this->_i[ n ]; }
 
 	// ***** + && - ***** //
-	T* operator+(int n) { return this->_i + n; }
-	T* operator-(int n) { return this->_i - n; }
+	pointer operator+( int n ) { return this->_i + n; }
+	pointer operator-( int n ) { return this->_i - n; }
 
 	// ***** += && -= ***** //
-	T* operator+=(int n) { return this->_i += n; }
-	T* operator-=(int n) { return this->_i -= n; }
+	pointer operator+=( int n ) { return this->_i += n; }
+	pointer operator-=( int n ) { return this->_i -= n; }
 
 	// ***** > && < ***** //
-	bool operator>(const LegacyRandomAccessIterator& other) { return this->_i > other._i; }
-	bool operator<(const LegacyRandomAccessIterator& other) { return this->_i < other._i; }
+	bool operator>( const iterator_type& other ) { return this->_i > other._i; }
+	bool operator<( const iterator_type& other ) { return this->_i < other._i; }
 
 	// ***** >= && <= ***** //
-	bool operator>=(const LegacyRandomAccessIterator& other) { return this->_i >= other._i; }
-	bool operator<=(const LegacyRandomAccessIterator& other) { return this->_i <= other._i; }
+	bool operator>=( const iterator_type& other ) { return this->_i >= other._i; }
+	bool operator<=( const iterator_type& other ) { return this->_i <= other._i; }
 
 	// ***** == && != ***** //
-	bool operator==(const LegacyRandomAccessIterator& other) { return this->_i == other._i; }
-	bool operator!=(const LegacyRandomAccessIterator& other) { return this->_i != other._i; }
+	bool operator==( const RandomAccess<T>& other ) {
+		return this->_i == other._i;
+	}
+	bool operator!=( const iterator_type& other ) { return this->_i != other._i; }
+
+	// ***** utils ***** //
+	iterator_type base() { return *this; }
 };

@@ -15,8 +15,8 @@ namespace ft {
 	class vector {
 	public:
 		// ***** iter ***** //
-		typedef LegacyRandomAccessIterator<T> iterator;
-		typedef const LegacyRandomAccessIterator<T> const_iterator;
+		typedef RandomAccess<T> iterator;
+		typedef const RandomAccess<T> const_iterator;
 
 		iterator begin() { return _pVector; }
 		const_iterator begin() const { return _pVector; }

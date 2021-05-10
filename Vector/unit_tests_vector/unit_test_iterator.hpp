@@ -335,11 +335,23 @@ void unit_test_iterator() {
 		svRes << "==:d " << (++sIt == sIt) << std::endl;
 		mvRes << "==:d " << (++mIt == mIt) << std::endl;
 
+		svRes << "==:d " << (++sIt == ++sIt) << std::endl;
+		mvRes << "==:d " << (++mIt == ++mIt) << std::endl;
+		svRes << "==:d " << (++sIt == ++sIt) << std::endl;
+		mvRes << "==:d " << (++mIt == ++mIt) << std::endl;
+
 
 		svRes << "==:d " << *sIt << std::endl;
 		mvRes << "==:d " << *mIt << std::endl;
 
+		svRes << "==:d " << (++sIt == ++sIt1) << std::endl;
+		mvRes << "==:d " << (++mIt == ++mIt1) << std::endl;
 
+		++sIt;
+		++mIt;
+
+		std::cout << "value: " << *sIt << std::endl;
+		std::cout << "value: " << *mIt << std::endl;
 
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str());
