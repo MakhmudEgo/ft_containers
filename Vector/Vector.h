@@ -14,15 +14,30 @@ namespace ft {
 	>
 	class vector {
 	public:
+		// ***** Member types ***** //
+
+		typedef T									value_type;
+		typedef Allocator							allocator_type;
+		typedef std::size_t							size_type;
+		typedef std::ptrdiff_t						difference_type;
+		typedef typename Allocator::reference		reference;
+		typedef typename Allocator::const_reference	const_reference;
+		typedef typename Allocator::pointer			pointer;
+		typedef typename Allocator::const_pointer	const_pointer;
+		typedef RandomAccess<T>						iterator;
+		typedef const RandomAccess<T>				const_iterator;
+
+		// ***** Member types ***** //
+
 		// ***** iter ***** //
-		typedef RandomAccess<T> iterator;
-		typedef const RandomAccess<T> const_iterator;
 
 		iterator begin() { return _pVector; }
 		const_iterator begin() const { return _pVector; }
 
 		iterator end() { return _pVector + _sz; }
 		const_iterator end() const { return _pVector + _sz; }
+
+		// ***** iter ***** //
 
 
 
@@ -36,11 +51,7 @@ namespace ft {
 				  const T &value = T(),
 				  const Allocator &alloc = Allocator() )
 				  : _alloc( alloc ), _sz( 0 ), _cp(0) {
-			reserve(count);
-			_sz = count;
-			for (size_t i = 0; i < count; ++i) {
-				_alloc.construct(_pVector + i, value);
-			}
+			default_init(count, value);
 		}
 
 /*		template<class InputIt>
@@ -54,6 +65,15 @@ namespace ft {
 				//
 			}
 		}
+
+		void assign( size_type count, const T& value ) {
+			default_init(count, value);
+		}
+
+/*		template< class InputIt >
+		void assign( InputIt first, InputIt last ) {
+
+		}*/
 
 		size_t size() const {
 			return _sz;
@@ -119,11 +139,20 @@ namespace ft {
 			return _pVector[n];
 		}
 
+
 	private:
-		T *_pVector;
-		Allocator _alloc;
-		size_t _sz;
+		value_type *_pVector;
+		allocator_type _alloc;
+		size_type _sz;
 		size_t _cp;
+
+		void default_init( size_type count, const T &value = T()) {
+			reserve(count);
+			_sz = count;
+			for (size_t i = 0; i < count; ++i) {
+				_alloc.construct(_pVector + i, value);
+			}
+		}
 	};
 
 	template<class Allocator>
