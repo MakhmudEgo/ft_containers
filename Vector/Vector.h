@@ -8,6 +8,15 @@
 #include "Iterator.h"
 #include <iostream>
 
+
+template<bool B, class T = void>
+struct enable_if { };
+
+template<class T>
+struct enable_if<true, T> {
+	typedef T type;
+};
+
 namespace ft {
 	template<
 			class T,
@@ -71,7 +80,9 @@ namespace ft {
 			default_init(count, value);
 		}
 
-		void assign( RandomAccess<T> first, RandomAccess<T> last ) {
+		template< typename InputIt >
+		typename enable_if<!std::is_integral<InputIt>::value, void>::type
+		assign( InputIt first, InputIt last) {
 			reserve( last - first );
 			_sz = last - first;
 
@@ -79,15 +90,6 @@ namespace ft {
 				_alloc.construct(this->_pVector + i, *first);
 			}
 		}
-/*		template< typename InputIt >
-		void assign( InputIt first, InputIt last) {
-			reserve( last - first );
-			_sz = last - first;
-
-			for (size_t i = 0; first != last; ++first, i++) {
-				_alloc.construct(this->_pVector + i, *first);
-			}
-		}*/
 
 		size_t size() const {
 			return _sz;
