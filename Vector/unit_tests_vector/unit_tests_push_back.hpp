@@ -40,4 +40,25 @@ void unit_tests_push_back() {
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
+
+	{
+		std::vector<int> sv;
+		ft::vector<int> mv;
+		std::stringstream svRes;
+		std::stringstream mvRes;
+
+		sv.push_back(7);
+		mv.push_back(7);
+		sv.push_back(4);
+		mv.push_back(4);
+		sv.push_back(0);
+		mv.push_back(0);
+		sv.push_back(10);
+		mv.push_back(10);
+
+		PrintV(sv, svRes);
+		PrintV(mv, mvRes);
+
+		ASSERT_EQUAL(svRes.str(), mvRes.str())
+	}
 }
