@@ -356,5 +356,27 @@ void unit_test_iterator() {
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str());
 	}
+
+	{
+		std::vector<int> sv(123);
+		ft::vector<int> mv(123);
+
+		std::stringstream svRes;
+		std::stringstream mvRes;
+		std::vector<int>::iterator sIt = sv.begin();
+		ft::vector<int>::iterator mIt = mv.begin();
+		InitVector(sv, 11, true);
+		InitVector(mv, 11, true);
+
+		std::vector<int>::const_iterator sIt1 = sv.begin();
+		ft::vector<int>::const_iterator mIt1 = mv.begin();
+		sIt1++;
+		mIt1++;
+
+		svRes << "iter: " << *sIt1++ << std::endl;
+		mvRes << "iter: " << *mIt1++ << std::endl;
+
+		ASSERT_EQUAL(svRes.str(), mvRes.str());
+	}
 }
 
