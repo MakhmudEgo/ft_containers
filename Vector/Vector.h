@@ -8,6 +8,7 @@
 #include "Iterator.h"
 #include <iostream>
 #include <stdexcept>
+#include <limits>
 
 
 template<bool B, class T = void>
@@ -113,7 +114,7 @@ namespace ft {
 
 		bool		empty() const { return !_sz; }
 		size_t		size() const { return _sz; }
-		size_type	max_size() const { return std::numeric_limits<unsigned long long >::max() / sizeof( T ); }
+		size_type	max_size() const { return ULONG_LONG_MAX / sizeof( T ); }
 		void		reserve( size_type new_cap ) {
 			if (new_cap <= _cp) {
 				return;

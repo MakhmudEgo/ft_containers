@@ -22,8 +22,12 @@ int main() {
 //		tr.RunTest(unit_size, "Size");
 //		tr.RunTest(unit_test_iterator, "iterator");
 //		tr.RunTest(unit_test_assign, "assign");
-		tr.RunTest(unit_test_erase, "erase");
+//		tr.RunTest(unit_test_erase, "erase");
 	}
+	std::vector<int > v;
+	ft::vector<int > v1;
+	std::cout << v.max_size() << std::endl;
+	std::cout << v1.max_size() << std::endl;
 
 
 	return 0;
