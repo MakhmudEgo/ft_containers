@@ -35,17 +35,14 @@ namespace ft {
 		typedef typename Allocator::pointer			pointer;
 		typedef typename Allocator::const_pointer	const_pointer;
 		typedef RandomAccess<T>						iterator;
-		typedef const RandomAccess<T>				const_iterator;
+		typedef ConstRandomAccess<T>				const_iterator;
 
 		// ***** Member types ***** //
 
 		// ***** iter ***** //
 
 		iterator begin() { return _pVector; }
-		const_iterator begin() const { return _pVector; }
-
 		iterator end() { return _pVector + _sz; }
-		const_iterator end() const { return _pVector + _sz; }
 
 		// ***** iter ***** //
 
@@ -91,13 +88,31 @@ namespace ft {
 			}
 		}
 
-		size_t size() const {
-			return _sz;
+		// *************** Capacity *************** //
+		bool		empty() const { return !_sz; }
+		size_t		size() const { return _sz; }
+		size_type	max_size() const { return std::numeric_limits< long long >::max() / sizeof( T ); }
+		void		reserve( size_type new_cap ) {
+			if (new_cap <= _cp) {
+				return;
+			}
+			T* newVector = _alloc.allocate(new_cap);
+//			std::uninitialized_copy(_pVector, _pVector + _sz, newVector); // TODO:: when be iter
+			{
+				for (size_t i = 0; i < _sz; ++i) {
+					_alloc.construct(newVector + i, _pVector[i]);
+				}
+			}
+			for (size_t i = 0; i < _sz; ++i) {
+				_alloc.destroy(_pVector + i);
+			}
+			if (_cp) {
+				_alloc.deallocate(_pVector, _cp);
+			}
+			_pVector = newVector;
+			_cp = new_cap;
 		}
-
-		size_t capacity() const {
-			return _cp;
-		}
+		size_type	capacity() const { return _cp; }
 
 		void resize( size_t count, T value = T() ) {
 			if (count > _cp) {
@@ -124,27 +139,6 @@ namespace ft {
 				}
 			}
 			_sz = count;
-		}
-
-		void reserve( size_t new_cap ) {
-			if (new_cap <= _cp) {
-				return;
-			}
-			T* newVector = _alloc.allocate(new_cap);
-//			std::uninitialized_copy(_pVector, _pVector + _sz, newVector); // TODO:: when be iter
-			{
-				for (size_t i = 0; i < _sz; ++i) {
-					_alloc.construct(newVector + i, _pVector[i]);
-				}
-			}
-			for (size_t i = 0; i < _sz; ++i) {
-				_alloc.destroy(_pVector + i);
-			}
-			if (_cp) {
-				_alloc.deallocate(_pVector, _cp);
-			}
-			_pVector = newVector;
-			_cp = new_cap;
 		}
 
 		T& operator[](size_t n) {
