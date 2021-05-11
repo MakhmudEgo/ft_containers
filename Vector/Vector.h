@@ -157,7 +157,6 @@ namespace ft {
 				}
 			}
 			return pos;
-
 		}
 
 		iterator erase( iterator first, iterator last ) {
@@ -176,6 +175,7 @@ namespace ft {
 			}
 			return last;
 		}
+
 		void resize( size_t count, T value = T() ) {
 			if (count > _cp) {
 				size_t possible_size = _cp;
@@ -185,7 +185,6 @@ namespace ft {
 					}
 				}
 				reserve(count > possible_size ? count : possible_size);
-
 				for (size_t i = _sz; i < count; ++i) {
 					_alloc.construct(_v + i, value);
 				}
@@ -203,6 +202,16 @@ namespace ft {
 			_sz = count;
 		}
 
+		void push_back( const T& value ) {
+			if (_sz == _cp) {
+				reserve(_cp * 2);
+			}
+			_v[_sz] = value;
+			++_sz;
+		}
+
+
+		// *************** Modifiers *************** //
 
 	private:
 		value_type *_v;
