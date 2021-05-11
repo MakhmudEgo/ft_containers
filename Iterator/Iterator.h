@@ -7,18 +7,10 @@
 template<class T>
 class Iterator {
 public:
-	typedef T				value_type;
-	typedef std::ptrdiff_t	difference_type;
-	typedef T*				pointer;
-	typedef T&				reference;
-	typedef const T&		const_reference;
-
 
 	Iterator(T* i) : _i( i ) {}
+	Iterator(const Iterator<T>& i) : _i( i._i ) {}
 	Iterator( std::__1::__wrap_iter<T*> i) : _i( &( *i ) ) {}
-
-	reference operator*() { return *_i; }
-	const_reference operator*() const { return *_i; }
 
 protected:
 	T* _i;
@@ -36,7 +28,10 @@ public:
 
 
 	RandomAccess( T* i ) : Iterator< T >( i ) {}
+	RandomAccess(const Iterator<T>& i) : Iterator<T>(i) {}
 	RandomAccess( std::__1::__wrap_iter< T* > i) : Iterator< T >( i ) {}
+
+	reference operator*() { return *this->_i; }
 
 	// ***** post inc ***** //
 	iterator_type operator++( int ) {
@@ -62,7 +57,7 @@ public:
 
 	// ***** [] ***** //
 	reference operator[]( int n ) { return this->_i[ n ]; }
-	const_reference operator[]( int n ) const { return this->_i[ n ]; }
+
 
 	// ***** + && - ***** //
 	iterator_type operator+( int n ) { return iterator_type(this->_i + n); }
@@ -91,4 +86,22 @@ public:
 
 	// ***** utils ***** //
 	iterator_type base() { return *this; }
+};
+
+template<class T>
+class ConstRandomAccess : public RandomAccess<T> {
+public:
+	typedef T				value_type;
+	typedef std::ptrdiff_t	difference_type;
+	typedef T*				pointer;
+	typedef T&				reference;
+	typedef const T&		const_reference;
+
+	ConstRandomAccess( T* i ) : RandomAccess< T >( i ) {}
+	ConstRandomAccess( std::__1::__wrap_iter< T* > i) : RandomAccess< T >( i ) {}
+	ConstRandomAccess(const Iterator<T>& i) : RandomAccess< T >( i ) {}
+
+	const_reference operator*() { return *this->_i; }
+	const_reference operator[]( int n ) const { return this->_i[ n ]; }
+
 };
