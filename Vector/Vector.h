@@ -205,7 +205,7 @@ namespace ft {
 
 		void push_back( const T& value ) {
 			if (_sz == _cp) {
-				reserve(_cp * 2);
+				reserve(empty() ? 1 : _cp * 2);
 			}
 			_v[_sz] = value;
 			++_sz;
