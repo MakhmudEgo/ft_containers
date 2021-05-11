@@ -9,7 +9,8 @@
 //#include "unit_test_iterator.hpp"
 //#include "unit_test_size.hpp"
 //#include "unit_test_assign.hpp"
-#include "unit_test_erase.hpp"
+//#include "unit_test_erase.hpp"
+#include "unit_tests_push_back.hpp"
 #include "Vector.h"
 #include "test_runner.h"
 #include <numeric>
@@ -23,11 +24,8 @@ int main() {
 //		tr.RunTest(unit_test_iterator, "iterator");
 //		tr.RunTest(unit_test_assign, "assign");
 //		tr.RunTest(unit_test_erase, "erase");
+		tr.RunTest(unit_tests_push_back, "push_back");
 	}
-	std::vector<int > v;
-	ft::vector<int > v1;
-	std::cout << v.max_size() << std::endl;
-	std::cout << v1.max_size() << std::endl;
 
 
 	return 0;
