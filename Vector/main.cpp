@@ -24,9 +24,19 @@ int main() {
 //		tr.RunTest(unit_test_iterator, "iterator");
 //		tr.RunTest(unit_test_assign, "assign");
 //		tr.RunTest(unit_test_erase, "erase");
-		tr.RunTest(unit_tests_push_back, "push_back");
+//		tr.RunTest(unit_tests_push_back, "push_back");
 	}
 
+	std::vector<int> i(100, 1);
+	std::vector<int> v5(5, 5);
 
+	std::cout << "sz: " << v5.size() << std::endl;
+	std::cout << "cp: " << v5.capacity() << std::endl;
+
+	v5 = i;
+//	PrintV(v5, std::cout);
+	std::cout << "after" << std::endl;
+	std::cout << "sz: " << v5.size() << std::endl;
+	std::cout << "cp: " << v5.capacity() << std::endl;
 	return 0;
 }
