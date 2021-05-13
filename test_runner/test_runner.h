@@ -12,7 +12,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
 
 /*template <class T>
 ostream& operator << (ostream& os, const vector<T>& s) {
@@ -57,20 +56,20 @@ ostream& operator << (ostream& os, const map<K, V>& m) {
 }*/
 
 template<class T, class U>
-void AssertEqual(const T& t, const U& u, const string& hint = std::string()) {
+void AssertEqual(const T& t, const U& u, const std::string& hint = std::string()) {
 	if (!(t == u)) {
-		ostringstream os;
+		std::ostringstream os;
 		os << "Assertion failed: " << std::endl << t << " != " << std::endl << u;
 		if (!hint.empty()) {
 			os << " hint: " << hint;
 		}
-		throw runtime_error(os.str());
+		throw std::runtime_error(os.str());
 	}
 	std::cout << "\x1b[42m" << "first arg\n" << t << "\x1b[0m\n";
 	std::cout << "\x1b[43m" << "second arg\n" << u << "\x1b[0m\n";
 }
 
-inline void Assert(bool b, const string& hint) {
+inline void Assert(bool b, const std::string& hint) {
 	AssertEqual(b, true, hint);
 }
 
@@ -78,22 +77,22 @@ class TestRunner {
 public:
 	TestRunner() : fail_count(0) {}
 	template <class TestFunc>
-	void RunTest(TestFunc func, const string& test_name) {
+	void RunTest(TestFunc func, const std::string& test_name) {
 		try {
 			func();
-			cerr << test_name << " OK" << endl;
-		} catch (exception& e) {
+			std::cerr << test_name << " OK" << std::endl;
+		} catch (std::exception& e) {
 			++fail_count;
-			cerr << test_name << " fail: " << e.what() << endl;
+			std::cerr << test_name << " fail: " << e.what() << std::endl;
 		} catch (...) {
 			++fail_count;
-			cerr << "Unknown exception caught" << endl;
+			std::cerr << "Unknown exception caught" << std::endl;
 		}
 	}
 
 	~TestRunner() {
 		if (fail_count > 0) {
-			cerr << fail_count << " unit tests failed. Terminate" << endl;
+			std::cerr << fail_count << " unit tests failed. Terminate" << std::endl;
 			exit(1);
 		}
 	}
@@ -103,7 +102,7 @@ private:
 };
 
 #define ASSERT_EQUAL(x, y) {            \
-  ostringstream os;                     \
+  std::ostringstream os;                     \
   os << #x << " != " << #y << ", "      \
     << __FILE__ << ":" << __LINE__;     \
   AssertEqual(x, y, os.str());          \

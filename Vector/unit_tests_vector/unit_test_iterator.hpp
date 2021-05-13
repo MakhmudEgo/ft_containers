@@ -363,8 +363,8 @@ void unit_test_iterator() {
 
 		std::stringstream svRes;
 		std::stringstream mvRes;
-		std::vector<int>::iterator sIt = sv.begin();
-		ft::vector<int>::iterator mIt = mv.begin();
+		__unused std::vector<int>::iterator sIt = sv.begin();
+		__unused ft::vector<int>::iterator mIt = mv.begin();
 		InitVector(sv, 11, true);
 		InitVector(mv, 11, true);
 

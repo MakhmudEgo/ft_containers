@@ -12,6 +12,14 @@
 	mvRes << "size: " << mv.size() << std::endl \
 	<< "capacity: " << mv.capacity() << std::endl;
 
+#define PRINT_V \
+	PrintV(sv, svRes); \
+	PrintV(mv, mvRes);
+
+#define SIZE_PRINT_V \
+	UNIT_SIZE_INIT_SS \
+	PRINT_V
+
 template<typename T>
 std::ostream& PrintV(T& v, std::ostream& os) {
 	for (size_t i = 0; i < v.size(); ++i) {
