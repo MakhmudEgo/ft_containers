@@ -148,4 +148,34 @@ void unit_tests_insert() {
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
+
+	{
+		std::vector<int> sv(3);
+		ft::vector<int> mv(3);
+		std::stringstream svRes;
+		std::stringstream mvRes;
+
+		InitVector(sv, 1, true);
+		InitVector(mv, 1, true);
+
+		sv.insert(sv.end(), 3);
+		mv.insert(mv.end(), 3);
+		SIZE_PRINT_V
+
+		sv.reserve(12);
+		mv.reserve(12);
+
+		sv.erase(sv.begin());
+		mv.erase(mv.begin());
+		SIZE_PRINT_V
+
+		sv.push_back(43);
+		mv.push_back(43);
+		SIZE_PRINT_V
+
+/*		sv.insert(sv.begin() + 3, 5, 13);
+		mv.insert(mv.begin() + 3, 5, 13);*/ //todo bug
+		PRINT_V
+		ASSERT_EQUAL(svRes.str(), mvRes.str())
+	}
 }

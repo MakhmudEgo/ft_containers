@@ -226,7 +226,7 @@ namespace ft {
 
 		iterator	insert( iterator pos, const T& value ) {
 			size_type i = 0;
-			for ( ; i < _sz; ++i ) {
+			for ( ; i <= _sz; ++i ) {
 				if ( &_v[ i ] == &( *pos ) ) {
 					check_capacity();
 					_alloc.construct( _v + _sz, _v[ _sz - 1 ] );
