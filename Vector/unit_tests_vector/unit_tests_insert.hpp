@@ -85,4 +85,67 @@ void unit_tests_insert() {
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
+
+	{
+		std::vector<int> sv;
+		ft::vector<int> mv;
+		std::stringstream svRes;
+		std::stringstream mvRes;
+
+		sv.reserve(25);
+		mv.reserve(25);
+		sv.assign(13, 1);
+		mv.assign(13, 1);
+		UNIT_SIZE_INIT_SS
+		svRes << "return value insert: " << *sv.insert(sv.begin(), 13) << std::endl;
+		mvRes << "return value insert: " << *mv.insert(mv.begin(), 13) << std::endl;
+		PRINT_V
+
+		sv.erase(sv.begin());
+		mv.erase(mv.begin());
+		SIZE_PRINT_V
+
+		sv.erase(sv.begin() + static_cast<int>(sv.size()) - 1);
+		mv.erase(mv.begin() + static_cast<int>(mv.size()) - 1);
+
+		sv.insert(sv.begin(), 3, 3);
+		mv.insert(mv.begin(), 3, 3);
+
+		SIZE_PRINT_V
+
+		ASSERT_EQUAL(svRes.str(), mvRes.str())
+	}
+
+	{
+		std::vector<int> sv;
+		ft::vector<int> mv;
+		std::stringstream svRes;
+		std::stringstream mvRes;
+
+		sv.reserve(25);
+		mv.reserve(25);
+		sv.assign(13, 1);
+		mv.assign(13, 1);
+		UNIT_SIZE_INIT_SS
+		svRes << "return value insert: " << *sv.insert(sv.begin(), 13) << std::endl;
+		mvRes << "return value insert: " << *mv.insert(mv.begin(), 13) << std::endl;
+		PRINT_V
+
+		sv.erase(sv.begin());
+		mv.erase(mv.begin());
+		SIZE_PRINT_V
+
+		sv.erase(sv.begin() + static_cast<int>(sv.size()) - 1);
+		mv.erase(mv.begin() + static_cast<int>(mv.size()) - 1);
+
+		sv.insert(sv.begin() + 2, 3, 3);
+		mv.insert(mv.begin() + 2, 3, 3);
+		SIZE_PRINT_V
+
+		sv.insert(sv.begin(), 7);
+		mv.insert(mv.begin(), 7);
+		SIZE_PRINT_V
+
+		ASSERT_EQUAL(svRes.str(), mvRes.str())
+	}
 }
