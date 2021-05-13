@@ -235,15 +235,38 @@ namespace ft {
 					}
 					_v[ i ] = value;
 					++_sz;
-					break ;
+					break;
 				}
 			}
 			return _v + i;
 		}
-/*		void		insert( iterator pos, size_type count, const T& value ) {
-
+		void		insert( iterator pos, size_type count, const T& value ) {
+			size_type i = 0;
+			for ( ; i <= _sz; ++i ) {
+				if ( &_v[ i ] == &( *pos ) ) {
+					if (_sz + count >= _cp) {
+						size_t possible_size = _cp ? _cp : 1;
+						while (possible_size < _sz + count ) {
+							possible_size *= 2;
+						}
+					}
+					size_t n = 0;
+					for (size_t j = 0; j < count; ++j) {
+						_alloc.construct( _v + _sz + count - j - 1, _v[ _sz - j -1 ]);
+						n =  _sz + count - j - 1;
+					}
+					--n;
+					for (; n > i + count - 1; --n) {
+						_v[ n ] = _v[ n - count ];
+					}
+					for (size_t g = 0; g < count; ++g, --n) {
+						_v[ n ] = value;
+					}
+					_sz += count;
+				}
+			}
 		}
-		template< class InputIt >
+/*		template< class InputIt >
 		void		insert( iterator pos, InputIt first, InputIt last) {
 
 		}*/

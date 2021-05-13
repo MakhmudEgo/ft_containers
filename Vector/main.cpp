@@ -53,15 +53,14 @@ int Hello::n = 0;*/
 int main() {
 	{
 		TestRunner tr;
-		tr.RunTest(unit_tests_vector, "base test");
-		tr.RunTest(unit_size, "Size");
-		tr.RunTest(unit_test_iterator, "iterator");
-		tr.RunTest(unit_test_assign, "assign");
-		tr.RunTest(unit_test_erase, "erase");
-		tr.RunTest(unit_tests_push_back, "push_back");
+//		tr.RunTest(unit_tests_vector, "base test");
+//		tr.RunTest(unit_size, "Size");
+//		tr.RunTest(unit_test_iterator, "iterator");
+//		tr.RunTest(unit_test_assign, "assign");
+//		tr.RunTest(unit_test_erase, "erase");
+//		tr.RunTest(unit_tests_push_back, "push_back");
 		tr.RunTest(unit_tests_insert, "insert");
 	}
-
 
 
 
