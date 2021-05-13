@@ -9,7 +9,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <limits>
-
+#include <iterator>
 
 template<bool B, class T = void>
 struct enable_if { };
@@ -39,7 +39,7 @@ namespace ft {
 		typedef RandomAccess< T >					iterator;
 		typedef ConstRandomAccess< T >				const_iterator;
 
-		// *************** Member types *************** //
+		// ******************************	Member types	****************************** //
 
 		vector& operator=( const vector& other ) {
 			if ( this != &other ) {
@@ -48,7 +48,7 @@ namespace ft {
 					_alloc.destroy( _v + i );
 				}
 				if ( _cp ) {
-					_alloc.deallocate( _v );
+					_alloc.deallocate( _v, _cp);
 				}
 				reserve( other._cp );
 				for ( size_type i = 0; i < other._sz; ++i ) {
@@ -59,12 +59,12 @@ namespace ft {
 			return *this;
 		}
 
-		// *************** iter *************** //
+		// ******************************	iter			****************************** //
 
 		iterator begin() { return _v; }
 		iterator end() { return _v + _sz; }
 
-		// *************** iter *************** //
+		// ******************************	iter			****************************** //
 
 		explicit vector( const Allocator &alloc = Allocator() )
 				: _v( 0x0 ), _alloc( alloc ), _sz( 0 ), _cp( 0 ) {}
@@ -88,20 +88,30 @@ namespace ft {
 			operator=( other );
 		}
 
+		virtual ~vector() {
+			if (_cp) {
+				for (size_type i = _sz; i > 0; --i) {
+					_alloc.destroy( _v + i - 1 );
+				}
+				_alloc.deallocate( _v, _cp );
+			}
+		}
+
 		void assign( size_type count, const T& value ) { default_init( count, value ); }
 
 		template< typename InputIt >
 		typename enable_if< !std::is_integral< InputIt >::value, void >::type
 		assign( InputIt first, InputIt last ) {
-			reserve( last - first );
-			_sz = last - first;
+			size_type n = std::distance(first, last);
+			reserve( n );
+			_sz = n;
 
 			for ( size_t i = 0; first != last; ++first, i++ ) {
 				_alloc.construct( this->_v + i, *first );
 			}
 		}
 
-		// *************** Element access *************** //
+		// ******************************	Element access	****************************** //
 
 		reference at( size_type pos ) {
 			if ( pos >= _sz ) {
@@ -123,10 +133,10 @@ namespace ft {
 		reference		back() { return _v[ _sz - 1 ]; }
 		const_reference	back() const { return _v[ _sz - 1 ]; }
 
-		// *************** Element access *************** //
+		// ******************************	Element access	****************************** //
 
 
-		// *************** Capacity *************** //
+		// ******************************	Capacity		****************************** //
 
 		bool		empty() const { return !_sz; }
 		size_t		size() const { return _sz; }
@@ -151,12 +161,12 @@ namespace ft {
 		}
 		size_type	capacity() const { return _cp; }
 
-		// *************** Capacity *************** //
+		// ******************************	Capacity		****************************** //
 
 
-		// *************** Modifiers *************** //
+		// ******************************	Modifiers		****************************** //
 
-		iterator erase( iterator pos ) {
+		iterator	erase( iterator pos ) {
 			for ( size_type i = 0; i < _sz; ++i ) {
 				if ( &_v[ i ] == &( *pos ) ) {
 					_alloc.destroy( _v + i );
@@ -173,8 +183,7 @@ namespace ft {
 			}
 			return pos;
 		}
-
-		iterator erase( iterator first, iterator last ) {
+		iterator	erase( iterator first, iterator last ) {
 			for ( size_type i = 0; i < _sz; ++i ) {
 				if ( &_v[ i ] == &( *first ) ) {
 					size_type el = i;
@@ -190,16 +199,9 @@ namespace ft {
 			}
 			return last;
 		}
-
-		void resize( size_t count, T value = T() ) {
+		void		resize( size_t count, T value = T() ) {
 			if ( count > _cp ) {
-				size_t possible_size = _cp;
-				if ( _cp * 2 > count ) {
-					while ( possible_size < count ) {
-						possible_size *= 2;
-					}
-				}
-				reserve( count > possible_size ? count : possible_size );
+				reserve( count > _cp * 2 ? count : _cp * 2 );
 				for ( size_type i = _sz; i < count; ++i ) {
 					_alloc.construct( _v + i, value );
 				}
@@ -216,17 +218,38 @@ namespace ft {
 			}
 			_sz = count;
 		}
-
-		void push_back( const T& value ) {
-			if ( _sz == _cp ) {
-				reserve( empty() ? 1 : _cp * 2 );
-			}
+		void		push_back( const T& value ) {
+			check_capacity();
 			_v[ _sz ] = value;
 			++_sz;
 		}
 
+		iterator	insert( iterator pos, const T& value ) {
+			size_type i = 0;
+			for ( ; i < _sz; ++i ) {
+				if ( &_v[ i ] == &( *pos ) ) {
+					check_capacity();
+					_alloc.construct( _v + _sz, _v[ _sz - 1 ] );
+					for ( size_type j = _sz; j > i + 1; --j ) {
+						_v[ j - 1 ] = _v[ j - 2 ];
+					}
+					_v[ i ] = value;
+					++_sz;
+					break ;
+				}
+			}
+			return _v + i;
+		}
+/*		void		insert( iterator pos, size_type count, const T& value ) {
 
-		// *************** Modifiers *************** //
+		}
+		template< class InputIt >
+		void		insert( iterator pos, InputIt first, InputIt last) {
+
+		}*/
+
+
+		// ******************************	Modifiers		****************************** //
 
 	private:
 		value_type *_v;
@@ -234,11 +257,17 @@ namespace ft {
 		size_type _sz;
 		size_t _cp;
 
-		void default_init( size_type count, const T &value = T() ) {
+		void	default_init( size_type count, const T &value = T() ) {
 			reserve( count );
 			_sz = count;
 			for ( size_t i = 0; i < count; ++i ) {
 				_alloc.construct( _v + i, value );
+			}
+		}
+
+		void	check_capacity() {
+			if ( _sz == _cp ) {
+				reserve( !_cp ? 1 : _cp * 2);
 			}
 		}
 	};
