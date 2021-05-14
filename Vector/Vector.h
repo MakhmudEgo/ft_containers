@@ -223,7 +223,6 @@ namespace ft {
 			_v[ _sz ] = value;
 			++_sz;
 		}
-
 		iterator	insert( iterator pos, const T& value ) {
 			size_type i = 0;
 			for ( ; i <= _sz; ++i ) {
@@ -269,17 +268,6 @@ namespace ft {
 				}
 			}
 		}
-
-		template< class InputIt >
-		size_t my_dist(InputIt first, InputIt last) {
-			size_t res = 0;
-			while (first != last) {
-				++res;
-				++first;
-			}
-			return res;
-		}
-
 		template< class InputIt >
 		typename enable_if< !std::is_integral< InputIt >::value, void >::type
 		insert( iterator pos, InputIt first, InputIt last ) {
@@ -312,6 +300,9 @@ namespace ft {
 				}
 			}
 		}
+		void		pop_back() {
+			erase(end() - 1);
+		}
 
 
 		// ******************************	Modifiers		****************************** //
@@ -334,6 +325,16 @@ namespace ft {
 			if ( _sz == _cp ) {
 				reserve( !_cp ? 1 : _cp * 2);
 			}
+		}
+
+		template< class InputIt >
+		size_t my_dist(InputIt first, InputIt last) {
+			size_t res = 0;
+			while (first != last) {
+				++res;
+				++first;
+			}
+			return res;
 		}
 	};
 
