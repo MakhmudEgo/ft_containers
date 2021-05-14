@@ -244,8 +244,8 @@ namespace ft {
 			size_type i = 0;
 			for ( ; i <= _sz; ++i ) {
 				if ( &_v[ i ] == &( *pos ) ) {
-					if ( count > _cp ) {
-						reserve(count > _cp * 2 ? count : _cp * 2);
+					if ( count >= _cp ) {
+						reserve( count >= _cp * 2 ? count : _cp * 2 );
 					}
 					size_t n = 0;
 					for (size_t j = _sz + count; j > i + count; --j) {
@@ -265,6 +265,7 @@ namespace ft {
 							_v[ n ] = value;
 						}
 					_sz += count;
+					return;
 				}
 			}
 		}
@@ -286,8 +287,8 @@ namespace ft {
 			size_type i = 0;
 			for ( ; i <= _sz; ++i ) {
 				if ( &_v[ i ] == &( *pos ) ) {
-					if ( count > _cp ) {
-						reserve(count > _cp * 2 ? count : _cp * 2);
+					if ( count >= _cp ) {
+						reserve( count >= _cp * 2 ? count : _cp * 2 );
 					}
 					size_t n = 0;
 					for (size_t j = _sz + count; j > i + count; --j) {
@@ -307,6 +308,7 @@ namespace ft {
 							_v[ n ] = *first;
 						}
 					_sz += count;
+					return;
 				}
 			}
 		}
