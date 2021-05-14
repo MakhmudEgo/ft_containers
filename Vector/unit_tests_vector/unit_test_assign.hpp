@@ -69,16 +69,16 @@ void unit_test_assign() {
 
 		std::stringstream svRes;
 		std::stringstream mvRes;
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 
 		sv.resize(6, 12);
 		mv.resize(6, 12);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 
 		sv.assign(2, 13);
 		mv.assign(2, 13);
 
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 
 		PrintV(sv, svRes);
 		PrintV(mv, mvRes);

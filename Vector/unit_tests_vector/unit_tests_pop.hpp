@@ -28,7 +28,7 @@ void unit_tests_pop() {
 
 		sv.pop_back();
 		mv.pop_back();
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str());
 	}
@@ -40,7 +40,7 @@ void unit_tests_pop() {
 
 		sv.pop_back();
 		mv.pop_back();
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str());
 	}

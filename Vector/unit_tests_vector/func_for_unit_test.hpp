@@ -6,19 +6,19 @@
 
 #include <iostream>
 
-#define UNIT_SIZE_INIT_SS \
-	svRes << "size: " << sv.size() << std::endl \
-	<< "capacity: " << sv.capacity() << std::endl; \
-	mvRes << "size: " << mv.size() << std::endl \
-	<< "capacity: " << mv.capacity() << std::endl;
+#define UNIT_SIZE_INIT_SS(x, y) \
+	svRes << "size: " << x.size() << std::endl \
+	<< "capacity: " << x.capacity() << std::endl; \
+	mvRes << "size: " << y.size() << std::endl \
+	<< "capacity: " << y.capacity() << std::endl;
 
-#define PRINT_V \
-	PrintV(sv, svRes); \
-	PrintV(mv, mvRes);
+#define PRINT_V(x, y) \
+	PrintV(x, svRes); \
+	PrintV(y, mvRes);
 
-#define SIZE_PRINT_V \
-	UNIT_SIZE_INIT_SS \
-	PRINT_V
+#define SIZE_PRINT_V(x, y) \
+	UNIT_SIZE_INIT_SS(x, y) \
+	PRINT_V(x, y)
 
 template<typename T>
 std::ostream& PrintV(T& v, std::ostream& os) {

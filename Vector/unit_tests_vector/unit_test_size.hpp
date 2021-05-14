@@ -17,7 +17,7 @@ void unit_size() {
 		std::stringstream svRes;
 		std::stringstream mvRes;
 
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
 
@@ -29,7 +29,7 @@ void unit_size() {
 
 		sv.reserve(13);
 		mv.reserve(13);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		PrintV(sv, svRes);
 		PrintV(mv, mvRes);
 		sv.reserve(13);
@@ -37,13 +37,13 @@ void unit_size() {
 
 		sv.resize(13);
 		mv.resize(13);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		PrintV(sv, svRes);
 		PrintV(mv, mvRes);
 
 		sv.resize(16, 1998);
 		mv.resize(16, 1998);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		PrintV(sv, svRes);
 		PrintV(mv, mvRes);
 
@@ -61,7 +61,7 @@ void unit_size() {
 
 		sv.resize(16, 1998);
 		mv.resize(16, 1998);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		PrintV(sv, svRes);
 		PrintV(mv, mvRes);
 
@@ -78,7 +78,7 @@ void unit_size() {
 
 		sv.resize(16);
 		mv.resize(16);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		PrintV(sv, svRes);
 		PrintV(mv, mvRes);
 
@@ -91,10 +91,10 @@ void unit_size() {
 		std::stringstream svRes;
 		std::stringstream mvRes;
 
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		sv.resize(10);
 		mv.resize(10);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		InitVector(sv, 3, true);
 		InitVector(mv, 3, true);
 		PrintV(sv, svRes);

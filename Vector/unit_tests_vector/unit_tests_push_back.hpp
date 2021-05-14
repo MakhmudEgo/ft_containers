@@ -17,26 +17,26 @@ void unit_tests_push_back() {
 		std::stringstream svRes;
 		std::stringstream mvRes;
 
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		sv.push_back(3);
 		mv.push_back(3);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		PrintV(sv, svRes);
 		PrintV(mv, mvRes);
 
 		for (int i = 0; i < 150; ++i) {
 			sv.push_back(i);
 			mv.push_back(i);
-			UNIT_SIZE_INIT_SS;
+			UNIT_SIZE_INIT_SS(sv, mv);
 		}
 
 		sv.resize(12);
 		mv.resize(12);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 
 		sv.resize(257);
 		mv.resize(257);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}

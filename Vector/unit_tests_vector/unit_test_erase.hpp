@@ -38,10 +38,10 @@ void unit_test_erase() {
 
 		InitVector(sv, 0, true);
 		InitVector(mv, 0, true);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		sv.erase(sv.begin() + 5);
 		mv.erase(mv.begin() + 5);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		std::cout << *(sv.end() + 1) << std::endl;
 //		sv.erase(sv.end());
 //		mv.erase(mv.end());
@@ -58,7 +58,7 @@ void unit_test_erase() {
 		std::stringstream svRes;
 		std::stringstream mvRes;
 
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 
 		InitVector(sv, 0, true);
 		InitVector(mv, 0, true);
@@ -73,7 +73,7 @@ void unit_test_erase() {
 
 		svRes << "return value erase: " << *sv.erase(sv.begin() + 6) << std::endl;
 		mvRes << "return value erase: " << *mv.erase(mv.begin() + 6) << std::endl;
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		PrintV(sv, svRes);
 		PrintV(mv, mvRes);
 
@@ -87,7 +87,7 @@ void unit_test_erase() {
 		std::stringstream svRes;
 		std::stringstream mvRes;
 
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 
 		InitVector(sv, 0, true);
 		InitVector(mv, 0, true);
@@ -102,11 +102,11 @@ void unit_test_erase() {
 
 		svRes << "return value erase: " << *sv.erase(sv.begin() + 6) << std::endl;
 		mvRes << "return value erase: " << *mv.erase(mv.begin() + 6) << std::endl;
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 
 		svRes << "return value erase: " << *sv.erase(sv.begin()+2, sv.begin()+5) << std::endl;
 		mvRes << "return value erase: " << *mv.erase(mv.begin()+2, mv.begin()+5) << std::endl;
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 
 		PrintV(sv, svRes);
 		PrintV(mv, mvRes);

@@ -70,18 +70,18 @@ void unit_tests_insert() {
 		mv.reserve(25);
 		sv.assign(12, 1);
 		mv.assign(12, 1);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		svRes << "return value insert: " << *sv.insert(sv.begin(), 13) << std::endl;
 		mvRes << "return value insert: " << *mv.insert(mv.begin(), 13) << std::endl;
-		PRINT_V
+		PRINT_V(sv, mv)
 
 		sv.erase(sv.begin());
 		mv.erase(mv.begin());
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.erase(sv.begin() + static_cast<int>(sv.size()) - 1);
 		mv.erase(mv.begin() + static_cast<int>(mv.size()) - 1);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
@@ -96,14 +96,14 @@ void unit_tests_insert() {
 		mv.reserve(25);
 		sv.assign(13, 1);
 		mv.assign(13, 1);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		svRes << "return value insert: " << *sv.insert(sv.begin(), 13) << std::endl;
 		mvRes << "return value insert: " << *mv.insert(mv.begin(), 13) << std::endl;
-		PRINT_V
+		PRINT_V(sv, mv)
 
 		sv.erase(sv.begin());
 		mv.erase(mv.begin());
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.erase(sv.begin() + static_cast<int>(sv.size()) - 1);
 		mv.erase(mv.begin() + static_cast<int>(mv.size()) - 1);
@@ -111,7 +111,7 @@ void unit_tests_insert() {
 		sv.insert(sv.begin(), 3, 3);
 		mv.insert(mv.begin(), 3, 3);
 
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
@@ -126,25 +126,25 @@ void unit_tests_insert() {
 		mv.reserve(25);
 		sv.assign(13, 1);
 		mv.assign(13, 1);
-		UNIT_SIZE_INIT_SS
+		UNIT_SIZE_INIT_SS(sv, mv)
 		svRes << "return value insert: " << *sv.insert(sv.begin(), 13) << std::endl;
 		mvRes << "return value insert: " << *mv.insert(mv.begin(), 13) << std::endl;
-		PRINT_V
+		PRINT_V(sv, mv)
 
 		sv.erase(sv.begin());
 		mv.erase(mv.begin());
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.erase(sv.begin() + static_cast<int>(sv.size()) - 1);
 		mv.erase(mv.begin() + static_cast<int>(mv.size()) - 1);
 
 		sv.insert(sv.begin() + 2, 3, 3);
 		mv.insert(mv.begin() + 2, 3, 3);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.insert(sv.begin(), 7);
 		mv.insert(mv.begin(), 7);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
@@ -160,22 +160,22 @@ void unit_tests_insert() {
 
 		sv.insert(sv.end(), 3);
 		mv.insert(mv.end(), 3);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.reserve(12);
 		mv.reserve(12);
 
 		sv.erase(sv.begin());
 		mv.erase(mv.begin());
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.push_back(43);
 		mv.push_back(43);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.insert(sv.begin() + 3, 5, 13);
 		mv.insert(mv.begin() + 3, 5, 13);
-		PRINT_V
+		PRINT_V(sv, mv)
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
 
@@ -191,7 +191,7 @@ void unit_tests_insert() {
 
 		sv.insert(sv.end(), 3);
 		mv.insert(mv.end(), 3);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.reserve(12);
 		mv.reserve(12);
@@ -202,16 +202,16 @@ void unit_tests_insert() {
 		mv.push_back(67);
 		mv.push_back(67);
 		mv.push_back(67);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 
 		sv.erase(sv.begin());
 		mv.erase(mv.begin());
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.push_back(43);
 		mv.push_back(43);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.insert(sv.begin() + 3, 5, 13);
 		mv.insert(mv.begin() + 3, 5, 13);
@@ -228,19 +228,19 @@ void unit_tests_insert() {
 
 		sv.insert(sv.begin(), 3);
 		mv.insert(mv.begin(), 3);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.erase(sv.begin());
 		mv.erase(mv.begin());
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.reserve(34);
 		mv.reserve(34);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.insert(sv.end(), 35);
 		mv.insert(mv.end(), 35);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
@@ -262,7 +262,7 @@ void unit_tests_insert() {
 
 		sv.insert(sv.begin(), 10, 13);
 		mv.insert(mv.begin(), 10, 13);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
@@ -283,11 +283,11 @@ void unit_tests_insert() {
 
 		sv.insert(sv.begin(), 10, 13);
 		mv.insert(mv.begin(), 10, 13);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.insert(sv.begin(), sv.begin(), sv.end());
 		mv.insert(mv.begin(), mv.begin(), mv.end());
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
@@ -300,11 +300,11 @@ void unit_tests_insert() {
 
 		sv.insert(sv.begin(), 0, 13);
 		mv.insert(mv.begin(), 0, 13);
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		sv.insert(sv.begin(), sv.begin(), sv.end());
 		mv.insert(mv.begin(), mv.begin(), mv.end());
-		SIZE_PRINT_V
+		SIZE_PRINT_V(sv, mv)
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
