@@ -62,7 +62,14 @@ int main() {
 		tr.RunTest(unit_tests_insert, "insert");
 	}
 
+/*
+	ft::vector<int> v(10);
+	ft::vector<int> r;
+	InitVector(v, 1, true);
 
+	r.insert(r.begin(), 10, 13);
+	PrintV(r, std::cout);
+*/
 
 	return 0;
 }

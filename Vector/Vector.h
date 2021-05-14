@@ -113,7 +113,7 @@ namespace ft {
 
 		// ******************************	Element access	****************************** //
 
-		reference at( size_type pos ) {
+		reference		at( size_type pos ) {
 			if ( pos >= _sz ) {
 				throw std::out_of_range( "vector" );
 			}
@@ -244,32 +244,72 @@ namespace ft {
 			size_type i = 0;
 			for ( ; i <= _sz; ++i ) {
 				if ( &_v[ i ] == &( *pos ) ) {
-					if (_sz + count >= _cp) {
-						size_t possible_size = _cp ? _cp : 1;
-						while (possible_size < _sz + count ) {
-							possible_size *= 2;
-						}
+					if ( count > _cp ) {
+						reserve(count > _cp * 2 ? count : _cp * 2);
 					}
 					size_t n = 0;
 					for (size_t j = _sz + count; j > i + count; --j) {
 						_alloc.construct( _v + j - 1, _v[ j - count - 1]);
 						n =  j - 1;
 					}
-					--n;
+					n ? --n : 0;
 					for (; n > i + count - 1; --n) {
 						_v[ n ] = _v[ n - count ];
 					}
-					for (size_t g = 0; g < count; ++g, --n) {
-						_v[ n ] = value;
-					}
+					if (n)
+						for (size_t g = 0; g < count; ++g, --n) {
+							_v[ n ] = value;
+						}
+					else
+						for (size_t g = 0; g < count; ++g, ++n) {
+							_v[ n ] = value;
+						}
 					_sz += count;
 				}
 			}
 		}
-/*		template< class InputIt >
-		void		insert( iterator pos, InputIt first, InputIt last) {
 
-		}*/
+		template< class InputIt >
+		size_t my_dist(InputIt first, InputIt last) {
+			size_t res = 0;
+			while (first != last) {
+				++res;
+				++first;
+			}
+			return res;
+		}
+
+		template< class InputIt >
+		typename enable_if< !std::is_integral< InputIt >::value, void >::type
+		insert( iterator pos, InputIt first, InputIt last ) {
+			size_t count = my_dist(first, last);
+			size_type i = 0;
+			for ( ; i <= _sz; ++i ) {
+				if ( &_v[ i ] == &( *pos ) ) {
+					if ( count > _cp ) {
+						reserve(count > _cp * 2 ? count : _cp * 2);
+					}
+					size_t n = 0;
+					for (size_t j = _sz + count; j > i + count; --j) {
+						_alloc.construct( _v + j - 1, _v[ j - count - 1]);
+						n =  j - 1;
+					}
+					n ? --n : 0;
+					for (; n > i + count - 1; --n) {
+						_v[ n ] = _v[ n - count ];
+					}
+					if (n)
+						for (size_t g = 0; g < count; ++g, --n, ++first) {
+							_v[ n ] = *first;
+						}
+					else
+						for (size_t g = 0; g < count; ++g, ++n, ++first) {
+							_v[ n ] = *first;
+						}
+					_sz += count;
+				}
+			}
+		}
 
 
 		// ******************************	Modifiers		****************************** //
