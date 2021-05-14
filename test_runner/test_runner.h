@@ -13,6 +13,8 @@
 #include <vector>
 
 
+#define RESET_COLOR "\x1b[0m\n"
+
 /*template <class T>
 ostream& operator << (ostream& os, const vector<T>& s) {
 	os << "{";
@@ -65,8 +67,8 @@ void AssertEqual(const T& t, const U& u, const std::string& hint = std::string()
 		}
 		throw std::runtime_error(os.str());
 	}
-	std::cout << "\x1b[42m" << "first arg\n" << t << "\x1b[0m\n";
-	std::cout << "\x1b[43m" << "second arg\n" << u << "\x1b[0m\n";
+	std::cout << "\x1b[42m" << "first arg\n" << t << RESET_COLOR;
+	std::cout << "\x1b[43m" << "second arg\n" << u << RESET_COLOR;
 }
 
 inline void Assert(bool b, const std::string& hint) {
@@ -80,19 +82,19 @@ public:
 	void RunTest(TestFunc func, const std::string& test_name) {
 		try {
 			func();
-			std::cerr << test_name << " OK" << std::endl;
+			std::cout << "\x1b[32m" << test_name << " OK" << RESET_COLOR << std::endl;
 		} catch (std::exception& e) {
 			++fail_count;
-			std::cerr << test_name << " fail: " << e.what() << std::endl;
+			std::cout << "\x1b[31m" << test_name << " fail: " << e.what() << RESET_COLOR << std::endl;
 		} catch (...) {
 			++fail_count;
-			std::cerr << "Unknown exception caught" << std::endl;
+			std::cout << "\x1b[31m" << "Unknown exception caught" << RESET_COLOR << std::endl;
 		}
 	}
 
 	~TestRunner() {
 		if (fail_count > 0) {
-			std::cerr << fail_count << " unit tests failed. Terminate" << std::endl;
+			std::cout << "\x1b[31m" << fail_count << " unit tests failed. Terminate" << RESET_COLOR << std::endl;
 			exit(1);
 		}
 	}

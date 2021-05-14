@@ -41,11 +41,11 @@ void unit_size() {
 		PrintV(sv, svRes);
 		PrintV(mv, mvRes);
 
-/*		sv.resize(16, 1998);
+		sv.resize(16, 1998);
 		mv.resize(16, 1998);
 		UNIT_SIZE_INIT_SS
 		PrintV(sv, svRes);
-		PrintV(mv, mvRes);*/
+		PrintV(mv, mvRes);
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
