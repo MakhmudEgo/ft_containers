@@ -251,9 +251,9 @@ namespace ft {
 						}
 					}
 					size_t n = 0;
-					for (size_t j = 0; j < count; ++j) {
-						_alloc.construct( _v + _sz + count - j - 1, _v[ _sz - j -1 ]);
-						n =  _sz + count - j - 1;
+					for (size_t j = _sz + count; j > i + count; --j) {
+						_alloc.construct( _v + j - 1, _v[ j - count - 1]);
+						n =  j - 1;
 					}
 					--n;
 					for (; n > i + count - 1; --n) {
