@@ -303,6 +303,22 @@ namespace ft {
 		void		pop_back() {
 			erase(end() - 1);
 		}
+		void		swap( vector& other ) {
+			value_type *_v_tmp = other._v;
+			allocator_type _alloc_tmp = other._alloc;
+			size_type _sz_tmp = other._sz;
+			size_t _cp_tmp = other._cp;
+
+			other._v = this->_v;
+			other._alloc = this->_alloc;
+			other._sz = this->_sz;
+			other._cp = this->_cp;
+
+			this->_v = _v_tmp;
+			this->_alloc = _alloc_tmp;
+			this->_sz = _sz_tmp;
+			this->_cp = _cp_tmp;
+		}
 
 
 		// ******************************	Modifiers		****************************** //
@@ -328,7 +344,7 @@ namespace ft {
 		}
 
 		template< class InputIt >
-		size_t my_dist(InputIt first, InputIt last) {
+		size_t	my_dist(InputIt first, InputIt last) {
 			size_t res = 0;
 			while (first != last) {
 				++res;
