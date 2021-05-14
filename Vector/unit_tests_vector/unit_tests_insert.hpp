@@ -173,9 +173,76 @@ void unit_tests_insert() {
 		mv.push_back(43);
 		SIZE_PRINT_V
 
-/*		sv.insert(sv.begin() + 3, 5, 13);
-		mv.insert(mv.begin() + 3, 5, 13);*/ //todo bug
+		sv.insert(sv.begin() + 3, 5, 13);
+		mv.insert(mv.begin() + 3, 5, 13);
 		PRINT_V
+		ASSERT_EQUAL(svRes.str(), mvRes.str())
+	}
+
+
+	{
+		std::vector<int> sv(3);
+		ft::vector<int> mv(3);
+		std::ostringstream svRes;
+		std::ostringstream mvRes;
+
+		InitVector(sv, 1, true);
+		InitVector(mv, 1, true);
+
+		sv.insert(sv.end(), 3);
+		mv.insert(mv.end(), 3);
+		SIZE_PRINT_V
+
+		sv.reserve(12);
+		mv.reserve(12);
+
+		sv.push_back(67);
+		sv.push_back(67);
+		sv.push_back(67);
+		mv.push_back(67);
+		mv.push_back(67);
+		mv.push_back(67);
+		SIZE_PRINT_V
+
+
+		sv.erase(sv.begin());
+		mv.erase(mv.begin());
+		SIZE_PRINT_V
+
+		sv.push_back(43);
+		mv.push_back(43);
+		SIZE_PRINT_V
+
+		sv.insert(sv.begin() + 3, 5, 13);
+		mv.insert(mv.begin() + 3, 5, 13);
+		PrintV(sv, svRes);
+		PrintV(mv, mvRes);
+		ASSERT_EQUAL(svRes.str(), mvRes.str())
+	}
+
+	{
+		std::vector<int> sv;
+		ft::vector<int> mv;
+		std::ostringstream svRes;
+		std::ostringstream mvRes;
+
+		sv.insert(sv.begin(), 3);
+		mv.insert(mv.begin(), 3);
+		SIZE_PRINT_V
+
+		sv.erase(sv.begin());
+		mv.erase(mv.begin());
+		SIZE_PRINT_V
+
+		sv.reserve(34);
+		mv.reserve(34);
+		SIZE_PRINT_V
+
+		sv.insert(sv.end(), 35);
+		mv.insert(mv.end(), 35);
+		SIZE_PRINT_V
+
+
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
 }
