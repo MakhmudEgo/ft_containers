@@ -245,4 +245,25 @@ void unit_tests_insert() {
 
 		ASSERT_EQUAL(svRes.str(), mvRes.str())
 	}
+
+	{
+		std::vector<int> sv;
+		ft::vector<int> mv;
+		std::ostringstream svRes;
+		std::ostringstream mvRes;
+
+		std::vector<int> sv1(10);
+		ft::vector<int> mv1(10);
+
+		InitVector(sv1, 1, true);
+		InitVector(mv1, 1, true);
+		PrintV(sv1, svRes);
+		PrintV(mv1, mvRes);
+
+		sv.insert(sv.begin(), 10, 13);
+		mv.insert(mv.begin(), 10, 13);
+		SIZE_PRINT_V
+
+		ASSERT_EQUAL(svRes.str(), mvRes.str())
+	}
 }
