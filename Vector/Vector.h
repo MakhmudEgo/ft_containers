@@ -61,8 +61,10 @@ namespace ft {
 
 		// ******************************	iter			****************************** //
 
-		iterator begin() { return _v; }
-		iterator end() { return _v + _sz; }
+		iterator begin() { return iterator(_v); }
+		const iterator begin() const{ return iterator(_v); }
+		iterator end() { return iterator(_v + _sz); }
+		const iterator end() const { return iterator(_v + _sz); }
 
 		// ******************************	iter			****************************** //
 
@@ -358,7 +360,78 @@ namespace ft {
 	class vector<bool, Allocator> {
 	public:
 		void hello() const {
-//			std::cout << "this is vector<bool>" << std::endl;
+			std::cout << "this is vector<bool>" << std::endl;
 		}
 	};
+
+	enum Comparison {
+		Less,
+		Equal,
+	};
+
+	template<class InputIt1, class InputIt2>
+	bool cmp(InputIt1 first1, InputIt1 last1,
+			 InputIt2 first2, InputIt2 last2,
+			 ft::Comparison cmp)
+	{
+		for ( ; (first1 != last1) && (first2 != last2); first1++, first2++ ) {
+			switch (cmp) {
+				case ft::Less:
+					if (*first1 > *first2) return true;
+					if (*first2 > *first1) return false;
+					break;
+				case ft::Equal:
+					if (*first1 != *first2) return false;
+					break;
+			}
+		}
+		switch (cmp) {
+			case ft::Less:
+				if (first1 != last1)
+					return true;
+				return false;
+			case ft::Equal:
+				return (first1 == last2 && first2 == last2);
+		}
+	}
 }
+
+// ******************************	Non-member functions	****************************** //
+
+template< class T>
+bool operator==( const ft::vector<T>& lhs,
+				 const ft::vector<T>& rhs ) {
+	return ft::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), ft::Equal);
+}
+
+template< class T, class Alloc >
+bool operator!=( const ft::vector<T,Alloc>& lhs,
+				 const ft::vector<T,Alloc>& rhs ) {
+	return !ft::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), ft::Equal);
+}
+
+template< class T, class Alloc >
+bool operator>( const ft::vector<T,Alloc>& lhs,
+				const ft::vector<T,Alloc>& rhs ) {
+	return ft::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), ft::Less);
+}
+
+template< class T, class Alloc >
+bool operator<( const ft::vector<T,Alloc>& lhs,
+				const ft::vector<T,Alloc>& rhs ) {
+	return !(lhs > rhs) && lhs != rhs;
+}
+
+template< class T, class Alloc >
+bool operator<=( const ft::vector<T,Alloc>& lhs,
+				 const ft::vector<T,Alloc>& rhs ) {
+	return lhs < rhs || lhs == rhs;
+}
+
+template< class T, class Alloc >
+bool operator>=( const ft::vector<T,Alloc>& lhs,
+				 const ft::vector<T,Alloc>& rhs ) {
+	return lhs > rhs || lhs == rhs;
+}
+
+// ******************************	Non-member functions	****************************** //
