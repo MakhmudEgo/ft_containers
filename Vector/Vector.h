@@ -91,10 +91,8 @@ namespace ft {
 		}
 
 		virtual ~vector() {
+			clear();
 			if (_cp) {
-				for (size_type i = _sz; i > 0; --i) {
-					_alloc.destroy( _v + i - 1 );
-				}
 				_alloc.deallocate( _v, _cp );
 			}
 		}
@@ -167,6 +165,12 @@ namespace ft {
 
 
 		// ******************************	Modifiers		****************************** //
+
+		void		clear() {
+			for (size_type i = _sz; i > 0; --i) {
+				_alloc.destroy( _v + i - 1 );
+			}
+		}
 
 		iterator	erase( iterator pos ) {
 			for ( size_type i = 0; i < _sz; ++i ) {
