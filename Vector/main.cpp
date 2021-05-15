@@ -12,9 +12,12 @@
 #include "unit_test_erase.hpp"
 #include "unit_tests_push_back.hpp"
 #include "unit_tests_insert.hpp"
+#include "unit_tests_pop.hpp"
+#include "unit_tests_swap.hpp"
+#include "unit_tests_cmp_oper.hpp"
+#include "unit_tests_reverse_iterator.hpp"
+#include "test_runner.h"
 #include "Vector.h"
-//#include "test_runner.h"
-#include <numeric>
 #include <vector>
 
 /*class Hello {
@@ -53,23 +56,18 @@ int Hello::n = 0;*/
 int main() {
 	{
 		TestRunner tr;
-//		tr.RunTest(unit_tests_vector, "base test");
-//		tr.RunTest(unit_size, "Size");
-//		tr.RunTest(unit_test_iterator, "iterator");
-//		tr.RunTest(unit_test_assign, "assign");
-//		tr.RunTest(unit_test_erase, "erase");
-//		tr.RunTest(unit_tests_push_back, "push_back");
+		tr.RunTest(unit_tests_vector, "base test");
+		tr.RunTest(unit_size, "Size");
+		tr.RunTest(unit_test_iterator, "iterator");
+		tr.RunTest(unit_test_assign, "assign");
+		tr.RunTest(unit_test_erase, "erase");
+		tr.RunTest(unit_tests_push_back, "push_back");
 		tr.RunTest(unit_tests_insert, "insert");
+		tr.RunTest(unit_tests_pop, "pop");
+		tr.RunTest(unit_tests_swap, "swap");
+		tr.RunTest(unit_tests_cmp_oper, "cmp_oper");
+		tr.RunTest(unit_tests_reverse_iterator, "reverse_iterator");
 	}
-
-/*
-	ft::vector<int> v(10);
-	ft::vector<int> r;
-	InitVector(v, 1, true);
-
-	r.insert(r.begin(), 10, 13);
-	PrintV(r, std::cout);
-*/
 
 	return 0;
 }

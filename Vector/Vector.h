@@ -9,7 +9,6 @@
 #include <iostream>
 #include <stdexcept>
 #include <limits>
-#include <iterator>
 
 template<bool B, class T = void>
 struct enable_if { };
@@ -63,24 +62,20 @@ namespace ft {
 
 		// ******************************	iter			****************************** //
 
-		iterator begin() { return iterator(_v); }
-		const_iterator begin() const{ return iterator(_v); }
-		iterator end() { return iterator(_v + _sz); }
-		const_iterator end() const { return iterator(_v + _sz); }
-
-		reverse_iterator rbegin() {
+		iterator				begin() { return iterator(_v); }
+		const_iterator			begin() const{ return iterator(_v); }
+		iterator				end() { return iterator(_v + _sz); }
+		const_iterator			end() const { return iterator(_v + _sz); }
+		reverse_iterator		rbegin() {
 			return (_v + _sz - 1);
 		}
-
-		const_reverse_iterator rbegin() const {
+		const_reverse_iterator	rbegin() const {
 			return (_v + _sz - 1);
 		}
-
-		reverse_iterator rend() {
+		reverse_iterator		rend() {
 			return _v - 1;
 		}
-
-		const_reverse_iterator rend() const {
+		const_reverse_iterator	rend() const {
 			return _v - 1;
 		}
 
@@ -108,19 +103,19 @@ namespace ft {
 			operator=( other );
 		}
 
-		virtual ~vector() {
+		virtual	~vector() {
 			clear();
 			if (_cp) {
 				_alloc.deallocate( _v, _cp );
 			}
 		}
 
-		void assign( size_type count, const T& value ) { default_init( count, value ); }
+		void	assign( size_type count, const T& value ) { default_init( count, value ); }
 
 		template< typename InputIt >
 		typename enable_if< !std::is_integral< InputIt >::value, void >::type
 		assign( InputIt first, InputIt last ) {
-			size_type n = std::distance(first, last);
+			size_type n = my_dist(first, last);
 			reserve( n );
 			_sz = n;
 
@@ -143,7 +138,6 @@ namespace ft {
 			}
 			return _v[ pos ];
 		}
-
 		reference		operator[]( size_type pos ) { return _v[ pos ]; }
 		const_reference	operator[]( size_type pos ) const { return _v[ pos ]; }
 		reference		front() { return *_v; }
@@ -378,13 +372,17 @@ namespace ft {
 		}
 	};
 
-	template<class Allocator>
+	// ******************************	vector<bool>		****************************** //
+
+/*	template<class Allocator>
 	class vector<bool, Allocator> {
 	public:
 		void hello() const {
 			std::cout << "this is vector<bool>" << std::endl;
 		}
-	};
+	};*/
+
+	// ******************************	vector<bool>		****************************** //
 
 	enum Comparison {
 		Less,
