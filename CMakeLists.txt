@@ -21,3 +21,7 @@ add_executable(Deque
 add_executable(Vector
         Vector/main.cpp
         )
+
+add_executable(List
+        List/main.cpp
+        )
