@@ -38,6 +38,8 @@ namespace ft {
 		typedef typename Allocator::const_pointer	const_pointer;
 		typedef RandomAccess< T >					iterator;
 		typedef ConstRandomAccess< T >				const_iterator;
+		typedef ReverseRandomAccess< T >				reverse_iterator;
+		typedef ConstReverseRandomAccess< T >			const_reverse_iterator;
 
 		// ******************************	Member types	****************************** //
 
@@ -62,9 +64,25 @@ namespace ft {
 		// ******************************	iter			****************************** //
 
 		iterator begin() { return iterator(_v); }
-		const iterator begin() const{ return iterator(_v); }
+		const_iterator begin() const{ return iterator(_v); }
 		iterator end() { return iterator(_v + _sz); }
-		const iterator end() const { return iterator(_v + _sz); }
+		const_iterator end() const { return iterator(_v + _sz); }
+
+		reverse_iterator rbegin() {
+			return (_v + _sz - 1);
+		}
+
+		const_reverse_iterator rbegin() const {
+			return (_v + _sz - 1);
+		}
+
+		reverse_iterator rend() {
+			return _v - 1;
+		}
+
+		const_reverse_iterator rend() const {
+			return _v - 1;
+		}
 
 		// ******************************	iter			****************************** //
 
