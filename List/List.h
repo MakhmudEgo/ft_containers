@@ -75,7 +75,9 @@ namespace ft {
 				while (_l_front) {
 					_alloc.destroy(_l_front->_data);
 					_alloc.deallocate(_l_front->_data, 1);
+					Node *tmp = _l_front;
 					_l_front = _l_front->next;
+					delete tmp;
 				}
 				_l_front = 0x0;
 				_l_back = 0x0;
@@ -98,7 +100,22 @@ namespace ft {
 			}
 			++_sz;
 		}
-//		void	pop_back() {} //todo ?
+		void	pop_back() {
+			if (_sz) {
+				_alloc.destroy(_l_back->_data);
+				_alloc.deallocate(_l_back->_data, 1);
+				Node *tmp = _l_back;
+
+				_l_back = _l_back->prev;
+				if (_l_back) {
+					_l_back->next = 0x0;
+				} else {
+					_l_front = 0x0;
+				}
+				delete tmp;
+				--_sz;
+			}
+		}
 		void	push_front( const T& value ) {
 			Node *_new_node = new Node;
 			_new_node->_data = _alloc.allocate(1);
@@ -115,7 +132,22 @@ namespace ft {
 			}
 			++_sz;
 		}
-//		void	pop_front(); //todo ?
+		void	pop_front() {
+			if (_sz) {
+				_alloc.destroy(_l_front->_data);
+				_alloc.deallocate(_l_front->_data, 1);
+				Node *tmp = _l_front;
+
+				_l_front = _l_front->prev;
+				if (_l_front) {
+					_l_front->next = 0x0;
+				} else {
+					_l_back = 0x0;
+				}
+				delete tmp;
+				--_sz;
+			}
+		}
 
 		// ******************************		Modifiers		****************************** //
 	private:

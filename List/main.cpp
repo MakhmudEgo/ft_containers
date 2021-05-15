@@ -15,7 +15,9 @@ int main() {
 	l.clear();
 	l.push_back(3);
 	l.push_front(77);
-
+	l.pop_back();
+	l.pop_front();
+	l.push_back(3);
 	std::cout << "sz: " << l.size() << std::endl;
 	std::cout << "f value: " << l.front() << std::endl;
 	std::cout << "b value: " << l.back() << std::endl;
