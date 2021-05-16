@@ -42,7 +42,7 @@ void unit_test_erase() {
 		sv.erase(sv.begin() + 5);
 		mv.erase(mv.begin() + 5);
 		UNIT_SIZE_INIT_SS(sv, mv)
-		std::cout << *(sv.end() + 1) << std::endl;
+//		std::cout << *(sv.end() + 1) << std::endl;
 //		sv.erase(sv.end());
 //		mv.erase(mv.end());
 		PrintV(sv, svRes);
