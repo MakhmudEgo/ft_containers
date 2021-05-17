@@ -5,7 +5,7 @@
 #pragma once
 
 #include <memory>
-#include "Iterator.h"
+#include "RandomIterator.h"
 #include <iostream>
 #include <stdexcept>
 #include <limits>
@@ -35,10 +35,10 @@ namespace ft {
 		typedef typename Allocator::const_reference	const_reference;
 		typedef typename Allocator::pointer			pointer;
 		typedef typename Allocator::const_pointer	const_pointer;
-		typedef RandomAccess< T >					iterator;
-		typedef ConstRandomAccess< T >				const_iterator;
-		typedef ReverseRandomAccess< T >				reverse_iterator;
-		typedef ConstReverseRandomAccess< T >			const_reverse_iterator;
+		typedef VectorIterator< T >					iterator;
+		typedef ConstVectorIterator< T >				const_iterator;
+		typedef ReverseVectorIterator< T >				reverse_iterator;
+		typedef ConstReverseVectorIterator< T >			const_reverse_iterator;
 
 		// ******************************	Member types	****************************** //
 

@@ -6,35 +6,35 @@
 
 namespace ft {
 	template<class T>
-	class Iterator {
+	class RandomIterator {
 	public:
 
-		Iterator(T *i) : _i(i) {}
+		RandomIterator(T *i) : _i(i) {}
 
-		Iterator(const Iterator<T> &i) : _i(i._i) {}
+		RandomIterator(const RandomIterator<T> &i) : _i(i._i) {}
 
-		Iterator(std::__1::__wrap_iter<T *> i) : _i(&(*i)) {}
+		RandomIterator(std::__1::__wrap_iter<T *> i) : _i(&(*i)) {}
 
 	protected:
 		T *_i;
 	};
 
 	template<class T>
-	class RandomAccess : public Iterator<T> {
+	class VectorIterator : public RandomIterator<T> {
 	public:
 		typedef T value_type;
 		typedef std::ptrdiff_t difference_type;
 		typedef T *pointer;
 		typedef T &reference;
 		typedef const T &const_reference;
-		typedef RandomAccess iterator_type;
+		typedef VectorIterator iterator_type;
 
 
-		RandomAccess(T *i) : Iterator<T>(i) {}
+		VectorIterator(T *i) : RandomIterator<T>(i) {}
 
-		RandomAccess(const Iterator<T> &i) : Iterator<T>(i) {}
+		VectorIterator(const RandomIterator<T> &i) : RandomIterator<T>(i) {}
 
-		RandomAccess(std::__1::__wrap_iter<T *> i) : Iterator<T>(i) {}
+		VectorIterator(std::__1::__wrap_iter<T *> i) : RandomIterator<T>(i) {}
 
 		reference operator*() { return *this->_i; }
 
@@ -89,7 +89,7 @@ namespace ft {
 		bool operator<=(const iterator_type &other) { return this->_i <= other._i; }
 
 		// ***** == && != ***** //
-		bool operator==(const RandomAccess<T> &other) {
+		bool operator==(const VectorIterator<T> &other) {
 			return this->_i == other._i;
 		}
 
@@ -100,7 +100,7 @@ namespace ft {
 	};
 
 	template<class T>
-	class ConstRandomAccess : public RandomAccess<T> {
+	class ConstVectorIterator : public VectorIterator<T> {
 	public:
 		typedef T value_type;
 		typedef std::ptrdiff_t difference_type;
@@ -108,11 +108,11 @@ namespace ft {
 		typedef T &reference;
 		typedef const T &const_reference;
 
-		ConstRandomAccess(T *i) : RandomAccess<T>(i) {}
+		ConstVectorIterator(T *i) : VectorIterator<T>(i) {}
 
-		ConstRandomAccess(std::__1::__wrap_iter<T *> i) : RandomAccess<T>(i) {}
+		ConstVectorIterator(std::__1::__wrap_iter<T *> i) : VectorIterator<T>(i) {}
 
-		ConstRandomAccess(const Iterator<T> &i) : RandomAccess<T>(i) {}
+		ConstVectorIterator(const RandomIterator<T> &i) : VectorIterator<T>(i) {}
 
 		const_reference operator*() { return *this->_i; }
 
@@ -121,21 +121,21 @@ namespace ft {
 	};
 
 	template<class T>
-	class ReverseRandomAccess : public Iterator<T> {
+	class ReverseVectorIterator : public RandomIterator<T> {
 	public:
 		typedef T value_type;
 		typedef std::ptrdiff_t difference_type;
 		typedef T *pointer;
 		typedef T &reference;
 		typedef const T &const_reference;
-		typedef ReverseRandomAccess iterator_type;
+		typedef ReverseVectorIterator iterator_type;
 
 
-		ReverseRandomAccess(T *i) : Iterator<T>(i) {}
+		ReverseVectorIterator(T *i) : RandomIterator<T>(i) {}
 
-		ReverseRandomAccess(const Iterator<T> &i) : Iterator<T>(i) {}
+		ReverseVectorIterator(const RandomIterator<T> &i) : RandomIterator<T>(i) {}
 
-		ReverseRandomAccess(std::__1::__wrap_iter<T *> i) : Iterator<T>(i) {}
+		ReverseVectorIterator(std::__1::__wrap_iter<T *> i) : RandomIterator<T>(i) {}
 
 		reference operator*() { return *this->_i; }
 
@@ -190,7 +190,7 @@ namespace ft {
 		bool operator<=(const iterator_type &other) { return this->_i >= other._i; }
 
 		// ***** == && != ***** //
-		bool operator==(const ReverseRandomAccess<T> &other) {
+		bool operator==(const ReverseVectorIterator<T> &other) {
 			return this->_i == other._i;
 		}
 
@@ -201,7 +201,7 @@ namespace ft {
 	};
 
 	template<class T>
-	class ConstReverseRandomAccess : public ReverseRandomAccess<T> {
+	class ConstReverseVectorIterator : public ReverseVectorIterator<T> {
 	public:
 		typedef T value_type;
 		typedef std::ptrdiff_t difference_type;
@@ -209,11 +209,11 @@ namespace ft {
 		typedef T &reference;
 		typedef const T &const_reference;
 
-		ConstReverseRandomAccess(T *i) : ReverseRandomAccess<T>(i) {}
+		ConstReverseVectorIterator(T *i) : ReverseVectorIterator<T>(i) {}
 
-		ConstReverseRandomAccess(std::__1::__wrap_iter<T *> i) : ReverseRandomAccess<T>(i) {}
+		ConstReverseVectorIterator(std::__1::__wrap_iter<T *> i) : ReverseVectorIterator<T>(i) {}
 
-		ConstReverseRandomAccess(const Iterator<T> &i) : ReverseRandomAccess<T>(i) {}
+		ConstReverseVectorIterator(const RandomIterator<T> &i) : ReverseVectorIterator<T>(i) {}
 
 		const_reference operator*() { return *this->_i; }
 
