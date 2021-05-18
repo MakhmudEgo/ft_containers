@@ -4,7 +4,11 @@
 
 #pragma once
 
+#include <memory>
+#include "BidirectionalIterator.h"
 #include <iostream>
+#include <stdexcept>
+#include <limits>
 
 namespace ft {
 	template<
@@ -30,7 +34,7 @@ namespace ft {
 
 		list()
 				: _l_front( new Node( _alloc.allocate( 1 ) ) ),
-				  _l_back( new Node(_alloc.allocate( 1 ) ) ),
+				  _l_back( _l_front ),
 				  _sz( 0 ) {
 			_l_front->next = _l_back;
 			_l_back->prev = _l_front;
@@ -38,7 +42,7 @@ namespace ft {
 		explicit list( const Allocator& alloc )
 				: _alloc( alloc ),
 				  _l_front( new Node(_alloc.allocate( 1 ) ) ),
-				  _l_back( new Node( _alloc.allocate( 1 ) ) ),
+				  _l_back( _l_front ),
 				  _sz( 0 ) {
 			_l_front->next = _l_back;
 			_l_back->prev = _l_front;
@@ -48,7 +52,7 @@ namespace ft {
 					   const Allocator&	alloc = Allocator() )
 				: _alloc( alloc ),
 				  _l_front( new Node( _alloc.allocate( 1 ) ) ),
-				  _l_back( new Node( _alloc.allocate( 1 ) ) ),
+				  _l_back( new Node( _l_front ) ),
 				  _sz( 0 ) {
 			_l_front->next = _l_back;
 			_l_back->prev = _l_front;
@@ -58,7 +62,7 @@ namespace ft {
 		}
 		explicit list( size_type count )
 				: _l_front( new Node( _alloc.allocate( 1 ) ) ),
-				  _l_back( new Node( _alloc.allocate( 1 ) ) ),
+				  _l_back( _l_front ),
 				  _sz( 0 ) {
 			_l_front->next = _l_back;
 			_l_back->prev = _l_front;
@@ -66,14 +70,16 @@ namespace ft {
 				push_back( T() );
 			}
 		}
+
+		/*template< class InputIt >
+		list( InputIt first, InputIt last,
+			  const Allocator& alloc = Allocator() );*/
+
 		virtual ~list() {
 			clear();
 			_alloc.destroy( _l_front->_data );
 			_alloc.deallocate( _l_front->_data, 1 );
-			_alloc.destroy( _l_back->_data );
-			_alloc.deallocate( _l_back->_data, 1 );
 			delete _l_front;
-			delete _l_back;
 		}
 
 		// ******************************	Member functions	****************************** //
@@ -82,11 +88,21 @@ namespace ft {
 		// ******************************	Element access		****************************** //
 
 		reference		front() { return *_l_front->next->_data; }
-		const_reference	front() const { return *_l_front->_data; }
+		const_reference	front() const { return *_l_front->next->_data; }
 		reference		back() { return *_l_back->prev->_data; };
-		const_reference	back() const { return *_l_back->_data; };
+		const_reference	back() const { return *_l_back->prev->_data; };
 
 		// ******************************	Element access		****************************** //
+
+
+		// ******************************		Iterators		****************************** //
+
+//		iterator begin();
+//		const_iterator begin() const;
+//		iterator end();
+//		const_iterator end() const;
+
+		// ******************************		Iterators		****************************** //
 
 
 		// ******************************		Capacity		****************************** //
