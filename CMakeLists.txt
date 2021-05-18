@@ -25,3 +25,7 @@ add_executable(Vector
 add_executable(List
         List/main.cpp
         )
+
+add_executable(testiter
+        Iterator/testRandom.cpp
+        )

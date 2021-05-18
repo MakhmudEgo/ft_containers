@@ -5,7 +5,7 @@
 #pragma once
 
 #include <memory>
-#include "BidirectionalIterator.h"
+#include "ListIterator.h"
 #include <iostream>
 #include <stdexcept>
 #include <limits>
@@ -16,6 +16,24 @@ namespace ft {
 			class Allocator = std::allocator <T>
 	>
 	class list {
+	private:
+		struct Node {
+			T*			_data;
+			struct Node	*next;
+			struct Node	*prev;
+
+			Node()
+					: _data( 0x0 ),
+					  next( 0x0 ),
+					  prev( 0x0 ) {}
+			Node( T		*data,
+				  Node	*next = 0x0,
+				  Node	*prev = 0x0 )
+					: _data( data ),
+					  next( next ),
+					  prev( prev ) {}
+		};
+
 	public:
 		typedef T									value_type;
 		typedef Allocator							allocator_type;
@@ -25,7 +43,7 @@ namespace ft {
 		typedef typename Allocator::const_reference	const_reference;
 		typedef typename Allocator::pointer			pointer;
 		typedef typename Allocator::const_pointer	const_pointer;
-//		typedef ... iterator
+		typedef ListIterator<T, Node>		iterator;
 //		typedef ... const_iterator
 //		typedef ... reverse_iterator
 //		typedef ... const_reverse_iterator
@@ -97,9 +115,13 @@ namespace ft {
 
 		// ******************************		Iterators		****************************** //
 
-//		iterator begin();
+		iterator begin() {
+			return (_l_front->next);
+		}
 //		const_iterator begin() const;
-//		iterator end();
+		iterator end() {
+			return ( _l_back->prev);
+		}
 //		const_iterator end() const;
 
 		// ******************************		Iterators		****************************** //
@@ -189,24 +211,8 @@ namespace ft {
 		}
 
 		// ******************************		Modifiers		****************************** //
+
 	private:
-		struct Node {
-			T*			_data;
-			struct Node	*next;
-			struct Node	*prev;
-
-			Node()
-					: _data( 0x0 ),
-					  next( 0x0 ),
-					  prev( 0x0 ) {}
-			Node( T		*data,
-				  Node	*next = 0x0,
-				  Node	*prev = 0x0 )
-					: _data( data ),
-					  next( next ),
-					  prev( prev ) {}
-		};
-
 		Allocator	_alloc;
 		Node		*_l_front;
 		Node		*_l_back;
