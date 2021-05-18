@@ -4,37 +4,26 @@
 
 #pragma once
 
+#include "Iterator.h"
+
 namespace ft {
-	template<class T>
-	class RandomIterator {
-	public:
-
-		RandomIterator(T *i) : _i(i) {}
-
-		RandomIterator(const RandomIterator<T> &i) : _i(i._i) {}
-
-		RandomIterator(std::__1::__wrap_iter<T *> i) : _i(&(*i)) {}
-
-	protected:
-		T *_i;
-	};
 
 	template<class T>
-	class VectorIterator : public RandomIterator<T> {
+	class VectorIterator : public Iterator<T> {
 	public:
-		typedef T value_type;
-		typedef std::ptrdiff_t difference_type;
-		typedef T *pointer;
-		typedef T &reference;
-		typedef const T &const_reference;
-		typedef VectorIterator iterator_type;
+		typedef T				value_type;
+		typedef std::ptrdiff_t	difference_type;
+		typedef T*				pointer;
+		typedef T&				reference;
+		typedef const T&		const_reference;
+		typedef VectorIterator	iterator_type;
 
 
-		VectorIterator(T *i) : RandomIterator<T>(i) {}
+		VectorIterator(T *i) : Iterator<T>(i) {}
 
-		VectorIterator(const RandomIterator<T> &i) : RandomIterator<T>(i) {}
+		VectorIterator(const Iterator<T> &i) : Iterator<T>(i) {}
 
-		VectorIterator(std::__1::__wrap_iter<T *> i) : RandomIterator<T>(i) {}
+		VectorIterator(std::__1::__wrap_iter<T *> i) : Iterator<T>(i) {}
 
 		reference operator*() { return *this->_i; }
 
@@ -49,7 +38,7 @@ namespace ft {
 			return *this;
 		}
 
-		// ***** post inc ***** //
+		// ***** post dec ***** //
 		iterator_type operator--(int) {
 			return iterator_type(this->_i--);
 		}
@@ -63,6 +52,8 @@ namespace ft {
 		// ***** [] ***** //
 		reference operator[](int n) { return this->_i[n]; }
 
+		// ***** -> ***** //
+//		pointer operator->() { return this; }
 
 		// ***** + && - ***** //
 		iterator_type operator+(int n) { return iterator_type(this->_i + n); }
@@ -112,7 +103,7 @@ namespace ft {
 
 		ConstVectorIterator(std::__1::__wrap_iter<T *> i) : VectorIterator<T>(i) {}
 
-		ConstVectorIterator(const RandomIterator<T> &i) : VectorIterator<T>(i) {}
+		ConstVectorIterator(const Iterator<T> &i) : VectorIterator<T>(i) {}
 
 		const_reference operator*() { return *this->_i; }
 
@@ -121,7 +112,7 @@ namespace ft {
 	};
 
 	template<class T>
-	class ReverseVectorIterator : public RandomIterator<T> {
+	class ReverseVectorIterator : public Iterator<T> {
 	public:
 		typedef T value_type;
 		typedef std::ptrdiff_t difference_type;
@@ -131,11 +122,11 @@ namespace ft {
 		typedef ReverseVectorIterator iterator_type;
 
 
-		ReverseVectorIterator(T *i) : RandomIterator<T>(i) {}
+		ReverseVectorIterator(T *i) : Iterator<T>(i) {}
 
-		ReverseVectorIterator(const RandomIterator<T> &i) : RandomIterator<T>(i) {}
+		ReverseVectorIterator(const Iterator<T> &i) : Iterator<T>(i) {}
 
-		ReverseVectorIterator(std::__1::__wrap_iter<T *> i) : RandomIterator<T>(i) {}
+		ReverseVectorIterator(std::__1::__wrap_iter<T *> i) : Iterator<T>(i) {}
 
 		reference operator*() { return *this->_i; }
 
@@ -213,7 +204,7 @@ namespace ft {
 
 		ConstReverseVectorIterator(std::__1::__wrap_iter<T *> i) : ReverseVectorIterator<T>(i) {}
 
-		ConstReverseVectorIterator(const RandomIterator<T> &i) : ReverseVectorIterator<T>(i) {}
+		ConstReverseVectorIterator(const Iterator<T> &i) : ReverseVectorIterator<T>(i) {}
 
 		const_reference operator*() { return *this->_i; }
 
