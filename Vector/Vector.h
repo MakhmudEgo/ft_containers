@@ -5,16 +5,16 @@
 #pragma once
 
 #include <memory>
-#include "RandomIterator.h"
+#include "VectorIterator.h"
 #include <iostream>
 #include <stdexcept>
 #include <limits>
 
-template<bool B, class T = void>
+template< bool B, class T = void >
 struct enable_if { };
 
-template<class T>
-struct enable_if<true, T> {
+template< class T >
+struct enable_if< true, T > {
 	typedef T type;
 };
 
@@ -36,9 +36,9 @@ namespace ft {
 		typedef typename Allocator::pointer			pointer;
 		typedef typename Allocator::const_pointer	const_pointer;
 		typedef VectorIterator< T >					iterator;
-		typedef ConstVectorIterator< T >				const_iterator;
-		typedef ReverseVectorIterator< T >				reverse_iterator;
-		typedef ConstReverseVectorIterator< T >			const_reverse_iterator;
+		typedef ConstVectorIterator< T >			const_iterator;
+		typedef ReverseVectorIterator< T >			reverse_iterator;
+		typedef ConstReverseVectorIterator< T >		const_reverse_iterator;
 
 		// ******************************	Member types	****************************** //
 
@@ -62,22 +62,14 @@ namespace ft {
 
 		// ******************************	iter			****************************** //
 
-		iterator				begin() { return iterator(_v); }
-		const_iterator			begin() const{ return iterator(_v); }
-		iterator				end() { return iterator(_v + _sz); }
-		const_iterator			end() const { return iterator(_v + _sz); }
-		reverse_iterator		rbegin() {
-			return (_v + _sz - 1);
-		}
-		const_reverse_iterator	rbegin() const {
-			return (_v + _sz - 1);
-		}
-		reverse_iterator		rend() {
-			return _v - 1;
-		}
-		const_reverse_iterator	rend() const {
-			return _v - 1;
-		}
+		iterator				begin() { return ( _v ); }
+		const_iterator			begin() const{ return ( _v ); }
+		iterator				end() { return ( _v + _sz ); }
+		const_iterator			end() const { return ( _v + _sz ); }
+		reverse_iterator		rbegin() { return ( _v + _sz - 1 ); }
+		const_reverse_iterator	rbegin() const { return ( _v + _sz - 1 ); }
+		reverse_iterator		rend() { return ( _v - 1 ); }
+		const_reverse_iterator	rend() const { return ( _v - 1 ); }
 
 		// ******************************	iter			****************************** //
 
@@ -99,13 +91,11 @@ namespace ft {
 			assign( first, last );
 		}
 
-		vector( const vector &other ) {
-			operator=( other );
-		}
+		vector( const vector &other ) { operator=( other ); }
 
 		virtual	~vector() {
 			clear();
-			if (_cp) {
+			if ( _cp ) {
 				_alloc.deallocate( _v, _cp );
 			}
 		}
@@ -115,7 +105,7 @@ namespace ft {
 		template< typename InputIt >
 		typename enable_if< !std::is_integral< InputIt >::value, void >::type
 		assign( InputIt first, InputIt last ) {
-			size_type n = my_dist(first, last);
+			size_type n = my_dist( first, last );
 			reserve( n );
 			_sz = n;
 
@@ -134,7 +124,7 @@ namespace ft {
 		}
 		const_reference	at( size_type pos ) const {
 			if ( pos >= _sz ) {
-				throw std::out_of_range("vector");
+				throw std::out_of_range( "vector" );
 			}
 			return _v[ pos ];
 		}
@@ -397,8 +387,7 @@ namespace ft {
 		for ( ; (first1 != last1) && (first2 != last2); first1++, first2++ ) {
 			switch (cmp) {
 				case ft::Less:
-					if (*first1 > *first2) return true;
-					if (*first2 > *first1) return false;
+					if (*first1 != *first2) return ( *first1 > *first2 );
 					break;
 				case ft::Equal:
 					if (*first1 != *first2) return false;
@@ -407,9 +396,7 @@ namespace ft {
 		}
 		switch (cmp) {
 			case ft::Less:
-				if (first1 != last1)
-					return true;
-				return false;
+				return (first1 != last1);
 			case ft::Equal:
 				return (first1 == last2 && first2 == last2);
 		}
