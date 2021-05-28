@@ -90,9 +90,17 @@ namespace ft {
 			delete _l_front;
 		}
 
+		list ( const list& other ) {
+			operator=(other);
+		}
+
 		list& operator=( const list& other ) {
 			if (this != other) {
-				//
+				this->clear();
+				list::iterator it = other.begin();
+				for (; it != end() ; ++it) {
+					push_back(*it);
+				}
 			}
 			return *this;
 		}
@@ -112,18 +120,10 @@ namespace ft {
 
 		// ******************************		Iterators		****************************** //
 
-		iterator begin() {
-			return (_l_front->next);
-		}
-		const_iterator begin() const {
-			return (_l_front->next);
-		}
-		iterator end() {
-			return ( _l_back);
-		}
-		const_iterator end() const {
-			return ( _l_back);
-		}
+		iterator 		begin() { return ( _l_front->next ); }
+		const_iterator	begin() const { return ( _l_front->next ); }
+		iterator		end() { return ( _l_back ); }
+		const_iterator	end() const { return ( _l_back ); }
 
 		// ******************************		Iterators		****************************** //
 
