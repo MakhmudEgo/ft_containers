@@ -80,9 +80,9 @@ namespace ft {
 		}
 
 		template< class InputIt >
-		list( InputIt first,
-			 InputIt last,
-			 const Allocator& alloc = Allocator() )
+		list( InputIt			first,
+			  InputIt			last,
+			 const Allocator&	alloc = Allocator() )
 			 : _alloc(alloc),
 			  _l_front( new Node(_alloc.allocate( 1 ) ) ),
 			  _l_back( _l_front ),
@@ -165,7 +165,31 @@ namespace ft {
 				_sz = 0;
 			}
 		}
-//		iterator insert( iterator pos, const T& value );
+		iterator insert( iterator pos, const T& value ) {
+			if (pos == begin() && empty()) {
+				push_back(value);
+				return ++pos;
+			}
+			Node *tmp = _l_front->next;
+
+			for (list::iterator it = begin(); it != end(); ++it, tmp = tmp->next) {
+				if (it == pos) {
+					Node *_new_node = new Node;
+
+					_new_node->_data = _alloc.allocate( 1 );
+					_alloc.construct( _new_node->_data, value );
+
+					_new_node->prev = tmp->prev;
+					tmp->prev->next = _new_node;
+					_new_node->next = tmp;
+					tmp->prev = _new_node;
+
+					++_sz;
+					return iterator(_new_node);
+				}
+			}
+			return pos;
+		}
 //		void insert( iterator pos, size_type count, const T& value );
 //		template< class InputIt >
 //		void insert( iterator pos, InputIt first, InputIt last);

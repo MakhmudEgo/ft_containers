@@ -52,8 +52,8 @@ namespace ft {
 		}
 
 
-		bool			operator==( const ListIterator< T, Node > &other ) { return this->_i.data == other._i.data; }
-		bool			operator!=(const ListIterator &other) { return this->_i != other._i; }
+		bool			operator==( const ListIterator< T, Node > &other ) { return this->_i->_data == other._i->_data; }
+		bool			operator!=(const ListIterator &other) { return this->_i->_data != other._i->_data; }
 	};
 
 	template< class T, class Node >

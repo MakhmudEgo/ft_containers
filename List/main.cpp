@@ -6,12 +6,16 @@
 #include "List.h"
 #include <numeric>
 #include "unit_tests_modifers.hpp"
+#include "unit_tests_insert_list.hpp"
+#include "unit_tests_iter.hpp"
 #include "test_runner.h"
 
 int main() {
 	{
 		TestRunner tr;
 		tr.RunTest(unit_tests_modifers, "unit_tests_modifers");
+		tr.RunTest(unit_tests_iter, "unit_tests_iter");
+		tr.RunTest(unit_tests_insert_list, "insert");
 	}
 /*	ft::list<int> l;
 
