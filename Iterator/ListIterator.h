@@ -50,6 +50,27 @@ namespace ft {
 			this->_i = this->_i->prev;
 			return *this;
 		}
+
+
+		bool			operator==( const ListIterator< T, Node > &other ) { return this->_i.data == other._i.data; }
+		bool			operator!=(const ListIterator &other) { return this->_i != other._i; }
+	};
+
+	template< class T, class Node >
+	class ConstListIterator : public ListIterator< T, Node > {
+	public:
+		typedef T				value_type;
+		typedef std::ptrdiff_t	difference_type;
+		typedef T*				pointer;
+		typedef T&				reference;
+		typedef const T&		const_reference;
+
+		ConstListIterator( Node *node )
+				: Iterator< Node >( node ) {}
+		ConstListIterator( const ConstListIterator< T, Node > &other )
+				: Iterator< Node >( other ) {}
+
+		const_reference	operator*() { return *this->_i; }
 	};
 
 }
