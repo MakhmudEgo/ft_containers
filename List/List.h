@@ -79,9 +79,20 @@ namespace ft {
 			}
 		}
 
-		/*template< class InputIt >
-		list( InputIt first, InputIt last,
-			  const Allocator& alloc = Allocator() );*/
+		template< class InputIt >
+		list( InputIt first,
+			 InputIt last,
+			 const Allocator& alloc = Allocator() )
+			 : _alloc(alloc),
+			  _l_front( new Node(_alloc.allocate( 1 ) ) ),
+			  _l_back( _l_front ),
+			  _sz( 0 ) {
+			_l_front->next = _l_back;
+			_l_back->prev = _l_front;
+			for ( ; first != last; ++first) {
+				push_back(*first);
+			}
+		}
 
 		virtual ~list() {
 			clear();
@@ -154,6 +165,10 @@ namespace ft {
 				_sz = 0;
 			}
 		}
+//		iterator insert( iterator pos, const T& value );
+//		void insert( iterator pos, size_type count, const T& value );
+//		template< class InputIt >
+//		void insert( iterator pos, InputIt first, InputIt last);
 		void	push_back( const T& value ) {
 			Node *_new_node = new Node;
 
