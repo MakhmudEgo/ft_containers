@@ -5,8 +5,14 @@
 #include <list>
 #include "List.h"
 #include <numeric>
+#include "unit_tests_modifers.hpp"
+#include "test_runner.h"
 
 int main() {
+	{
+		TestRunner tr;
+		tr.RunTest(unit_tests_modifers, "unit_tests_modifers");
+	}
 /*	ft::list<int> l;
 
 	l.push_back(1);
@@ -21,7 +27,7 @@ int main() {
 	std::cout << "f value: " << l.front() << std::endl;
 	std::cout << "b value: " << l.back() << std::endl;
 	std::cout << "max: " << l.max_size() << std::endl;*/
-
+/*
 	ft::list<std::string> list;
 	list.push_back("hello1");
 	list.push_back("hello2");
@@ -32,7 +38,7 @@ int main() {
 //	++it;
 //	ft::list<std::string>::iterator it1 = it;
 	*it = "346";
-	std::cout << *it;
+	std::cout << *it;*/
 //	std::list<int>::
 //	for (int i = 0; i < 5; ++i, ++it1) {
 //		std::cout << *it1 << ' ';

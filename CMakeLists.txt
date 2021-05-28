@@ -9,6 +9,8 @@ include_directories(.
         test_runner
         Vector
         Vector/unit_tests_vector
+        List
+        List/unit_tests_list
         )
 
 add_executable(ft_containers
