@@ -43,8 +43,8 @@ namespace ft {
 		typedef typename Allocator::const_reference	const_reference;
 		typedef typename Allocator::pointer			pointer;
 		typedef typename Allocator::const_pointer	const_pointer;
-		typedef ListIterator<T, Node>		iterator;
-//		typedef ... const_iterator
+		typedef ListIterator<T, Node>				iterator;
+		typedef ConstListIterator<T, Node>				const_iterator;
 //		typedef ... reverse_iterator
 //		typedef ... const_reverse_iterator
 
@@ -70,22 +70,12 @@ namespace ft {
 					   const Allocator&	alloc = Allocator() )
 				: _alloc( alloc ),
 				  _l_front( new Node( _alloc.allocate( 1 ) ) ),
-				  _l_back( new Node( _l_front ) ),
-				  _sz( 0 ) {
-			_l_front->next = _l_back;
-			_l_back->prev = _l_front;
-			for ( size_type i = 0; i < count; ++i ) {
-				push_back( value );
-			}
-		}
-		explicit list( size_type count )
-				: _l_front( new Node( _alloc.allocate( 1 ) ) ),
 				  _l_back( _l_front ),
 				  _sz( 0 ) {
 			_l_front->next = _l_back;
 			_l_back->prev = _l_front;
 			for ( size_type i = 0; i < count; ++i ) {
-				push_back( T() );
+				push_back( value );
 			}
 		}
 
@@ -98,6 +88,13 @@ namespace ft {
 			_alloc.destroy( _l_front->_data );
 			_alloc.deallocate( _l_front->_data, 1 );
 			delete _l_front;
+		}
+
+		list& operator=( const list& other ) {
+			if (this != other) {
+				//
+			}
+			return *this;
 		}
 
 		// ******************************	Member functions	****************************** //
@@ -118,11 +115,15 @@ namespace ft {
 		iterator begin() {
 			return (_l_front->next);
 		}
-//		const_iterator begin() const;
-		iterator end() {
-			return ( _l_back->prev);
+		const_iterator begin() const {
+			return (_l_front->next);
 		}
-//		const_iterator end() const;
+		iterator end() {
+			return ( _l_back);
+		}
+		const_iterator end() const {
+			return ( _l_back);
+		}
 
 		// ******************************		Iterators		****************************** //
 
