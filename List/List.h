@@ -10,6 +10,14 @@
 #include <stdexcept>
 #include <limits>
 
+template< bool B, class T = void >
+struct enable_if { };
+
+template< class T >
+struct enable_if< true, T > {
+	typedef T type;
+};
+
 namespace ft {
 	template<
 			class T,
@@ -190,9 +198,107 @@ namespace ft {
 			}
 			return pos;
 		}
-//		void insert( iterator pos, size_type count, const T& value );
-//		template< class InputIt >
-//		void insert( iterator pos, InputIt first, InputIt last);
+		void insert( iterator pos, size_type count, const T& value ) {
+			if ((pos == begin() && empty()) || pos == end()) {
+				for ( size_type i = 0; i < count; ++i) {
+					push_back(value);
+				}
+				return ;
+			}
+			Node *tmp = _l_front->next;
+
+			for (list::iterator it = begin(); it != end(); ++it, tmp = tmp->next) {
+				if (it == pos) {
+					for (size_type i = 0; i < count; ++i) {
+						Node *_new_node = new Node;
+
+						_new_node->_data = _alloc.allocate(1);
+						_alloc.construct(_new_node->_data, value);
+
+						_new_node->prev = tmp->prev;
+						tmp->prev->next = _new_node;
+						_new_node->next = tmp;
+						tmp->prev = _new_node;
+
+						++_sz;
+					}
+					return ;
+				}
+			}
+		}
+		template< class InputIt >
+		typename enable_if< !std::is_integral< InputIt >::value, void >::type
+		insert( iterator pos, InputIt first, InputIt last) {
+			if ((pos == begin() && empty()) || pos == end()) {
+				for ( ; first != last; ++first ) {
+					push_back(*first);
+				}
+				return ;
+			}
+
+			Node *tmp = _l_front->next;
+
+			for (list::iterator it = begin(); it != end(); ++it, tmp = tmp->next) {
+				if (it == pos) {
+					for ( ; first != last; ++first ) {
+						Node *_new_node = new Node;
+
+						_new_node->_data = _alloc.allocate(1);
+						_alloc.construct(_new_node->_data, *first);
+
+						_new_node->prev = tmp->prev;
+						tmp->prev->next = _new_node;
+						_new_node->next = tmp;
+						tmp->prev = _new_node;
+
+						++_sz;
+					}
+					return ;
+				}
+			}
+		}
+
+		iterator erase( iterator pos ) {
+			Node *tmp = _l_front->next;
+
+			for (list::iterator it = begin(); it != end(); ++it, tmp = tmp->next) {
+				if (it == pos) {
+					Node *res, *er = tmp;
+					tmp->prev->next = res = tmp->next;
+					tmp->next->prev = tmp->prev;
+					_alloc.destroy(er->_data);
+					_alloc.deallocate(er->_data, 1);
+					return res;
+				}
+			}
+			return pos;
+		}
+
+		iterator erase( iterator first, iterator last ) {
+			Node *res, *er, *tmp = _l_front->next;
+			list::iterator it = begin();
+			bool isInc = true;
+			while (it != end() && first != last) {
+				if (it == first) {
+					er = tmp;
+					tmp->prev->next = res = tmp->next;
+					it = res;
+					++first;
+					tmp->next->prev = tmp->prev;
+					_alloc.destroy(er->_data);
+					_alloc.deallocate(er->_data, 1);
+					tmp = res;
+					isInc = false;
+				}
+				if (isInc) {
+					++it;
+					tmp = tmp->next;
+				}
+				isInc = true;
+			}
+			return first;
+		}
+
 		void	push_back( const T& value ) {
 			Node *_new_node = new Node;
 
