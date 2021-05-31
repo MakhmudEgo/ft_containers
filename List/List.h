@@ -124,6 +124,21 @@ namespace ft {
 			return *this;
 		}
 
+		void assign( size_type count, const T& value ) {
+			clear();
+			for ( size_type i = 0; i < count; ++i ) {
+				push_back( value );
+			}
+		}
+		template< class InputIt >
+		typename enable_if< !std::is_integral< InputIt >::value, void >::type
+		assign( InputIt first, InputIt last ) {
+			clear();
+			for ( ; first != last; ++first) {
+				push_back(*first);
+			}
+		}
+
 		// ******************************	Member functions	****************************** //
 
 
