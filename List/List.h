@@ -139,6 +139,10 @@ namespace ft {
 			}
 		}
 
+		allocator_type get_allocator() const {
+			return _alloc;
+		}
+
 		// ******************************	Member functions	****************************** //
 
 
@@ -283,6 +287,7 @@ namespace ft {
 					tmp->next->prev = tmp->prev;
 					_alloc.destroy(er->_data);
 					_alloc.deallocate(er->_data, 1);
+					--_sz;
 					return res;
 				}
 			}
@@ -304,6 +309,7 @@ namespace ft {
 					_alloc.deallocate(er->_data, 1);
 					tmp = res;
 					isInc = false;
+					--_sz;
 				}
 				if (isInc) {
 					++it;
@@ -368,6 +374,18 @@ namespace ft {
 				_l_front->next = _l_front->next->next;
 				delete tmp;
 				--_sz;
+			}
+		}
+
+		void resize( size_type count, T value = T() ) {
+			if ( count < _sz) {
+				Node *tmp = _l_front->next;
+				for (size_type i = 0; i < count; ++i, tmp = tmp->next);
+				erase(iterator(tmp), end());
+				return;
+			}
+			for (size_type i = _sz; i < count; ++i) {
+				push_back(value);
 			}
 		}
 
