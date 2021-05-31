@@ -44,11 +44,32 @@ void unit_tests_insert_list() {
 		std::stringstream slRes;
 		std::stringstream mlRes;
 
-		std::cout << *sl.insert(sl.begin(), 0) << std::endl;
-		std::cout << *ml.insert(ml.begin(), 0) << std::endl;
-		std::cout << *sl.insert(sl.begin(), 13) << std::endl;
-		std::cout << *ml.insert(ml.begin(), 13) << std::endl;
+		slRes << *sl.insert(sl.begin(), 0) << std::endl;
+		mlRes << *ml.insert(ml.begin(), 0) << std::endl;
+		slRes << *sl.insert(sl.begin(), 13) << std::endl;
+		mlRes << *ml.insert(ml.begin(), 13) << std::endl;
 
+		PRINT_L(sl, ml)
+
+		ASSERT_EQUAL(slRes.str(), mlRes.str());
+	}
+
+	{
+		std::list<int> sl;
+		ft::list<int> ml;
+		std::stringstream slRes;
+		std::stringstream mlRes;
+
+		slRes << *sl.insert(sl.begin(), 0) << std::endl;
+		mlRes << *ml.insert(ml.begin(), 0) << std::endl;
+		slRes << *sl.insert(sl.begin(), 13) << std::endl;
+		mlRes << *ml.insert(ml.begin(), 13) << std::endl;
+		PRINT_L(sl, ml)
+
+		slRes << *sl.insert(sl.end(), 0) << std::endl;
+		mlRes << *ml.insert(ml.end(), 0) << std::endl;
+		slRes << *sl.insert(sl.end(), 13) << std::endl;
+		mlRes << *ml.insert(ml.end(), 13) << std::endl;
 		PRINT_L(sl, ml)
 
 		ASSERT_EQUAL(slRes.str(), mlRes.str());

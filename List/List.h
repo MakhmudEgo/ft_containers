@@ -166,9 +166,9 @@ namespace ft {
 			}
 		}
 		iterator insert( iterator pos, const T& value ) {
-			if (pos == begin() && empty()) {
+			if ((pos == begin() && empty()) || pos == end()) {
 				push_back(value);
-				return ++pos;
+				return --pos;
 			}
 			Node *tmp = _l_front->next;
 
