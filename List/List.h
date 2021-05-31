@@ -389,7 +389,34 @@ namespace ft {
 			}
 		}
 
+		void swap( list& other ) {
+			Allocator	tmp_alloc = _alloc;
+			Node		*tmp_l_front = _l_front;
+			Node		*tmp_l_back = _l_back;
+			size_type	tmp_sz = _sz;
+
+			this->_alloc = other._alloc;
+			this->_l_front = other._l_front;
+			this->_l_back = other._l_back;
+			this->_sz = other._sz;
+
+			other._alloc = tmp_alloc;
+			other._l_front = tmp_l_front;
+			other._l_back = tmp_l_back;
+			other._sz = tmp_sz;
+		}
+
 		// ******************************		Modifiers		****************************** //
+
+
+		// ******************************		Operations		****************************** //
+
+//		void merge( list& other ) {}
+
+//		template <class Compare>
+//		void merge( list& other, Compare comp );
+
+		// ******************************		Operations		****************************** //
 
 	private:
 		Allocator	_alloc;
@@ -398,4 +425,12 @@ namespace ft {
 		size_type	_sz;
 	};
 
+}
+
+// ******************************		Non-member functions		****************************** //
+
+template< class T, class Alloc >
+void swap( ft::list<T,Alloc>& lhs,
+		   ft::list<T,Alloc>& rhs ) {
+	lhs.swap(rhs);
 }
