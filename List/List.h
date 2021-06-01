@@ -350,27 +350,18 @@ namespace ft {
 				thisTmp = other._l_front;
 				other._l_front = otherTmp;
 			}
-			other._sz = 0;
-			other._l_front->next = other._l_back;
-			other._l_back->prev = other._l_front;
+			clearWithoutFree(other);
 		}
 
-		void splice( const_iterator pos, list& other ) { // todo: need refct
-			Node *tmp = _l_front->next;
-			std::cout << "hello " << *pos._i->_data << std::endl;
-			for ( const_iterator it = begin(); it != end(); ++it, tmp = tmp->next) {
-				if (it == pos) {
-					other._l_front = other._l_front->next;
-					while (other._l_front != other._l_back) {
-						Node *tmpOther = other._l_front->next;
-						push_prev(tmp, other._l_front);
-						other._l_front = tmpOther;
-					}
-					other._sz = 0;
-					other._l_front->next = other._l_back;
-					other._l_back->prev = other._l_front;
-					return ;
-				}
+		void splice( const_iterator pos, list& other ) {
+			if ( other._sz ) {
+				Node *posNode = pos._i;
+				posNode->prev->next = other._l_front->next;
+				other._l_front->next->prev = posNode->prev;
+				other._l_back->prev->next = posNode;
+				posNode->prev = other._l_back->prev;
+				this->_sz += other._sz;
+				clearWithoutFree(other);
 			}
 		}
 
@@ -403,6 +394,12 @@ namespace ft {
 		}
 
 		static bool comp_merge(T a, T b) { return (a > b); }
+
+		static void clearWithoutFree( list& l ) {
+			l._sz = 0;
+			l._l_front->next = l._l_back;
+			l._l_back->prev = l._l_front;
+		}
 	};
 
 }

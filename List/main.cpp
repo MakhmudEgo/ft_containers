@@ -17,11 +17,11 @@
 int main() {
 	{
 		TestRunner tr;
-		tr.RunTest(unit_tests_modifers, "unit_tests_modifers");
-		tr.RunTest(unit_tests_iter, "unit_tests_iter");
-		tr.RunTest(unit_tests_insert_list, "insert");
-		tr.RunTest(unit_tests_resize_list, "resize");
-		tr.RunTest(unit_tests_merge_list, "unit_tests_merge_list");
+//		tr.RunTest(unit_tests_modifers, "unit_tests_modifers");
+//		tr.RunTest(unit_tests_iter, "unit_tests_iter");
+//		tr.RunTest(unit_tests_insert_list, "insert");
+//		tr.RunTest(unit_tests_resize_list, "resize");
+//		tr.RunTest(unit_tests_merge_list, "unit_tests_merge_list");
 		tr.RunTest(unit_tests_splice_list, "unit_tests_splice_list");
 	}
 }
