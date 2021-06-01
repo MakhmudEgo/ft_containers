@@ -5,21 +5,23 @@
 #pragma once
 
 #include "Iterator.h"
-
+//#include "List.h"
 namespace ft {
 
 	template< class T, class Node >
 	class ListIterator : public Iterator< Node > {
 	public:
+		friend class list<T>;
 		typedef					T value_type;
 		typedef std::ptrdiff_t	difference_type;
 		typedef T*				pointer;
 		typedef T&				reference;
 		typedef const T&		const_reference;
-
 		ListIterator( Node *node )
 				: Iterator< Node >( node ) {}
 		ListIterator( const ListIterator< T, Node > &other )
+				: Iterator< Node >( other ) {}
+		ListIterator( const Iterator< Node > &other )
 				: Iterator< Node >( other ) {}
 
 		reference		operator*() { return *this->_i->_data; }
@@ -68,9 +70,11 @@ namespace ft {
 		ConstListIterator( Node *node )
 				: Iterator< Node >( node ) {}
 		ConstListIterator( const ConstListIterator< T, Node > &other )
-				: Iterator< Node >( other ) {}
+				: ListIterator<T, Node>(other) {}
+		ConstListIterator( const Iterator< Node > &other )
+				: ListIterator<T, Node>(other) {}
 
-		const_reference	operator*() { return *this->_i; }
+		const_reference	operator*() const { return *this->_i->_data; }
 	};
 
 }

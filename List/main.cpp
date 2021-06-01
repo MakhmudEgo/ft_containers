@@ -7,6 +7,7 @@
 #include <numeric>
 #include "unit_tests_modifers.hpp"
 #include "unit_tests_insert_and_erase_list.hpp"
+#include "unit_tests_splice_list.hpp"
 #include "unit_tests_resize_list.hpp"
 #include "unit_tests_merge_list.hpp"
 #include "unit_tests_iter.hpp"
@@ -21,5 +22,6 @@ int main() {
 		tr.RunTest(unit_tests_insert_list, "insert");
 		tr.RunTest(unit_tests_resize_list, "resize");
 		tr.RunTest(unit_tests_merge_list, "unit_tests_merge_list");
+		tr.RunTest(unit_tests_splice_list, "unit_tests_splice_list");
 	}
 }

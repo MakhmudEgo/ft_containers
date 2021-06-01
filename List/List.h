@@ -5,7 +5,6 @@
 #pragma once
 
 #include <memory>
-#include "ListIterator.h"
 #include <iostream>
 #include <stdexcept>
 #include <limits>
@@ -19,6 +18,11 @@ struct enable_if< true, T > {
 };
 
 namespace ft {
+	template< class T, class Node >
+	class ListIterator;
+	template< class T, class Node >
+	class ConstListIterator;
+
 	template<
 			class T,
 			class Allocator = std::allocator <T>
@@ -52,7 +56,7 @@ namespace ft {
 		typedef typename Allocator::pointer			pointer;
 		typedef typename Allocator::const_pointer	const_pointer;
 		typedef ListIterator<T, Node>				iterator;
-		typedef ConstListIterator<T, Node>				const_iterator;
+		typedef ConstListIterator<T, Node>			const_iterator;
 //		typedef ... reverse_iterator
 //		typedef ... const_reverse_iterator
 
@@ -65,6 +69,7 @@ namespace ft {
 			_l_front->next = _l_back;
 			_l_back->prev = _l_front;
 		}
+
 		explicit list( const Allocator& alloc )
 				: _alloc( alloc ),
 				  _l_front( new Node(_alloc.allocate( 1 ) ) ),
@@ -73,6 +78,7 @@ namespace ft {
 			_l_front->next = _l_back;
 			_l_back->prev = _l_front;
 		}
+
 		explicit list( size_type		count,
 					   const T&			value = T(),
 					   const Allocator&	alloc = Allocator() )
@@ -109,7 +115,7 @@ namespace ft {
 			delete _l_front;
 		}
 
-		list ( const list& other ) {
+		list( const list& other ) {
 			operator=(other);
 		}
 
@@ -177,7 +183,7 @@ namespace ft {
 
 		// ******************************		Modifiers		****************************** //
 
-		void	clear() {
+		void		clear() {
 			if ( _sz ) {
 				Node *clr = _l_front->next;
 				while ( clr != _l_back ) {
@@ -192,135 +198,47 @@ namespace ft {
 				_sz = 0;
 			}
 		}
-		iterator insert( iterator pos, const T& value ) {
-			if ((pos == begin() && empty()) || pos == end()) {
-				push_back(value);
-				return --pos;
-			}
-			Node *tmp = _l_front->next;
-
-			for (list::iterator it = begin(); it != end(); ++it, tmp = tmp->next) {
-				if (it == pos) {
-					Node *_new_node = new Node;
-
-					_new_node->_data = _alloc.allocate( 1 );
-					_alloc.construct( _new_node->_data, value );
-
-					_new_node->prev = tmp->prev;
-					tmp->prev->next = _new_node;
-					_new_node->next = tmp;
-					tmp->prev = _new_node;
-
-					++_sz;
-					return iterator(_new_node);
-				}
-			}
-			return pos;
+		iterator	insert( iterator pos, const T& value ) {
+			Node *newNode = new Node(_alloc.allocate(1));
+			_alloc.construct(newNode->_data, value);
+			push_prev(pos._i, newNode);
+			return newNode;
 		}
-		void insert( iterator pos, size_type count, const T& value ) {
-			if ((pos == begin() && empty()) || pos == end()) {
-				for ( size_type i = 0; i < count; ++i) {
-					push_back(value);
-				}
-				return ;
-			}
-			Node *tmp = _l_front->next;
-
-			for (list::iterator it = begin(); it != end(); ++it, tmp = tmp->next) {
-				if (it == pos) {
-					for (size_type i = 0; i < count; ++i) {
-						Node *_new_node = new Node;
-
-						_new_node->_data = _alloc.allocate(1);
-						_alloc.construct(_new_node->_data, value);
-
-						_new_node->prev = tmp->prev;
-						tmp->prev->next = _new_node;
-						_new_node->next = tmp;
-						tmp->prev = _new_node;
-
-						++_sz;
-					}
-					return ;
-				}
+		void		insert( iterator pos, size_type count, const T& value ) {
+			for ( size_type i = 0; i < count; ++i) {
+				Node *newNode = new Node(_alloc.allocate(1));
+				_alloc.construct(newNode->_data, value);
+				push_prev(pos._i, newNode);
+				pos._i = newNode;
 			}
 		}
 		template< class InputIt >
 		typename enable_if< !std::is_integral< InputIt >::value, void >::type
-		insert( iterator pos, InputIt first, InputIt last) {
-			if ((pos == begin() && empty()) || pos == end()) {
-				for ( ; first != last; ++first ) {
-					push_back(*first);
-				}
-				return ;
-			}
-
-			Node *tmp = _l_front->next;
-
-			for (list::iterator it = begin(); it != end(); ++it, tmp = tmp->next) {
-				if (it == pos) {
-					for ( ; first != last; ++first ) {
-						Node *_new_node = new Node;
-
-						_new_node->_data = _alloc.allocate(1);
-						_alloc.construct(_new_node->_data, *first);
-
-						_new_node->prev = tmp->prev;
-						tmp->prev->next = _new_node;
-						_new_node->next = tmp;
-						tmp->prev = _new_node;
-
-						++_sz;
-					}
-					return ;
-				}
+		insert( iterator pos, InputIt first, InputIt last ) {
+			for ( ; first != last; ++first) {
+				insert(pos, *first);
 			}
 		}
-
-		iterator erase( iterator pos ) {
-			Node *tmp = _l_front->next;
-
-			for (list::iterator it = begin(); it != end(); ++it, tmp = tmp->next) {
-				if (it == pos) {
-					Node *res, *er = tmp;
-					tmp->prev->next = res = tmp->next;
-					tmp->next->prev = tmp->prev;
-					_alloc.destroy(er->_data);
-					_alloc.deallocate(er->_data, 1);
-					--_sz;
-					return res;
-				}
-			}
-			return pos;
+		iterator	erase( iterator pos ) {
+			Node *tmp = pos._i;
+			Node *res = pos._i->next;
+			pos._i->prev->next = res;
+			res->prev = pos._i->prev;
+			_alloc.destroy(tmp->_data);
+			_alloc.deallocate(tmp->_data, 1);
+			--_sz;
+			delete tmp;
+			return res;
 		}
-
-		iterator erase( iterator first, iterator last ) {
-			Node *res, *er, *tmp = _l_front->next;
-			list::iterator it = begin();
-			bool isInc = true;
-			while (it != end() && first != last) {
-				if (it == first) {
-					er = tmp;
-					tmp->prev->next = res = tmp->next;
-					it = res;
-					++first;
-					tmp->next->prev = tmp->prev;
-					_alloc.destroy(er->_data);
-					_alloc.deallocate(er->_data, 1);
-					tmp = res;
-					isInc = false;
-					--_sz;
-				}
-				if (isInc) {
-					++it;
-					tmp = tmp->next;
-				}
-				isInc = true;
+		iterator	erase( iterator first, iterator last ) {
+			while ( first != last ) {
+				Node *tmp = first._i->next;
+				erase(first);
+				first = tmp;
 			}
 			return first;
 		}
-
-		void	push_back( const T& value ) {
+		void		push_back( const T& value ) {
 			Node *_new_node = new Node;
 
 			_new_node->_data = _alloc.allocate( 1 );
@@ -336,7 +254,7 @@ namespace ft {
 			_l_back->prev = _new_node;
 			++_sz;
 		}
-		void	pop_back() {
+		void		pop_back() {
 			if ( _sz ) {
 				Node *tmp = _l_back->prev;
 
@@ -348,7 +266,7 @@ namespace ft {
 				--_sz;
 			}
 		}
-		void	push_front( const T& value ) {
+		void		push_front( const T& value ) {
 			Node *_new_node = new Node;
 
 			_new_node->_data = _alloc.allocate( 1 );
@@ -364,7 +282,7 @@ namespace ft {
 			_l_front->next = _new_node;
 			++_sz;
 		}
-		void	pop_front() {
+		void		pop_front() {
 			if ( _sz ) {
 				Node *tmp = _l_front->next;
 
@@ -376,8 +294,7 @@ namespace ft {
 				--_sz;
 			}
 		}
-
-		void resize( size_type count, T value = T() ) {
+		void		resize( size_type count, T value = T() ) {
 			if ( count < _sz) {
 				Node *tmp = _l_front->next;
 				for (size_type i = 0; i < count; ++i, tmp = tmp->next);
@@ -388,8 +305,7 @@ namespace ft {
 				push_back(value);
 			}
 		}
-
-		void swap( list& other ) {
+		void		swap( list& other ) {
 			Allocator	tmp_alloc = _alloc;
 			Node		*tmp_l_front = _l_front;
 			Node		*tmp_l_back = _l_back;
@@ -411,12 +327,9 @@ namespace ft {
 
 		// ******************************		Operations		****************************** //
 
-		void merge( list& other ) {
-			this->merge(other, comp_merge);
-		}
-
+		void	merge( list& other ) { this->merge(other, comp_merge); }
 		template <class Compare>
-		void merge( list& other, Compare comp ) {
+		void	merge( list& other, Compare comp ) {
 			other._l_front = other._l_front->next;
 			Node *thisTmp = this->_l_front->next;
 
@@ -442,6 +355,29 @@ namespace ft {
 			other._l_back->prev = other._l_front;
 		}
 
+		void splice( const_iterator pos, list& other ) { // todo: need refct
+			Node *tmp = _l_front->next;
+			std::cout << "hello " << *pos._i->_data << std::endl;
+			for ( const_iterator it = begin(); it != end(); ++it, tmp = tmp->next) {
+				if (it == pos) {
+					other._l_front = other._l_front->next;
+					while (other._l_front != other._l_back) {
+						Node *tmpOther = other._l_front->next;
+						push_prev(tmp, other._l_front);
+						other._l_front = tmpOther;
+					}
+					other._sz = 0;
+					other._l_front->next = other._l_back;
+					other._l_back->prev = other._l_front;
+					return ;
+				}
+			}
+		}
+
+//		void splice( const_iterator pos, list& other, const_iterator it );
+
+//		void splice( const_iterator pos, list& other,
+//					 const_iterator first, const_iterator last);
 		// ******************************		Operations		****************************** //
 
 	private:
@@ -478,3 +414,4 @@ void swap( ft::list<T,Alloc>& lhs,
 		   ft::list<T,Alloc>& rhs ) {
 	lhs.swap(rhs);
 }
+#include "ListIterator.h"
