@@ -412,24 +412,26 @@ namespace ft {
 		// ******************************		Operations		****************************** //
 
 		void merge( list& other ) {
+			this->merge(other, comp_merge);
+		}
+
+		template <class Compare>
+		void merge( list& other, Compare comp ) {
 			other._l_front = other._l_front->next;
 			Node *thisTmp = this->_l_front->next;
 
-			for ( ; thisTmp != _l_back ; /*thisTmp = thisTmp->next*/) {
-				if (*thisTmp->_data > *other._l_front->_data && other._l_front != other._l_back) {
+			while ( thisTmp != _l_back ) {
+				if (comp(*thisTmp->_data, *other._l_front->_data)
+					&& other._l_front != other._l_back) {
 					Node *otherTmp = other._l_front->next;
 					push_prev(thisTmp, other._l_front);
 					other._l_front = otherTmp;
-//					thisTmp = thisTmp->next;
 				} else {
 					thisTmp = thisTmp->next;
-//					Node *otherTmp = other._l_front->next;
-//					push_next(thisTmp, other._l_front);
-//					other._l_front = otherTmp;
 				}
 			}
 			thisTmp = _l_back->prev;
-			while (other._l_front != other._l_back) {
+			while ( other._l_front != other._l_back ) {
 				Node *otherTmp = other._l_front->next;
 				push_next(thisTmp, other._l_front);
 				thisTmp = other._l_front;
@@ -439,9 +441,6 @@ namespace ft {
 			other._l_front->next = other._l_back;
 			other._l_back->prev = other._l_front;
 		}
-
-//		template <class Compare>
-//		void merge( list& other, Compare comp );
 
 		// ******************************		Operations		****************************** //
 
@@ -466,6 +465,8 @@ namespace ft {
 			currentNode->next = pushNode;
 			++_sz;
 		}
+
+		static bool comp_merge(T a, T b) { return (a > b); }
 	};
 
 }
