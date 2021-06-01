@@ -35,6 +35,6 @@ void InitList(T& l, U value, const bool dyn = true) {
 	InitList(x, z); \
 	InitList(y, z);
 
-#define SIZE_LIST \
-	slRes << "size " << sl.size() << std::endl; \
-	mlRes << "size " << ml.size() << std::endl;
+#define SIZE_LIST(x, y) \
+	slRes << "size " << x.size() << std::endl; \
+	mlRes << "size " << y.size() << std::endl;

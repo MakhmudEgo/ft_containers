@@ -49,10 +49,10 @@ void unit_tests_modifers() {
 
 		INIT_LIST(sl, ml, 1)
 
-		SIZE_LIST
+		SIZE_LIST(sl, ml)
 		sl.pop_front();
 		ml.pop_front();
-		SIZE_LIST
+		SIZE_LIST(sl, ml)
 
 		ASSERT_EQUAL(slRes.str(), mlRes.str());
 	}
@@ -65,12 +65,12 @@ void unit_tests_modifers() {
 
 		INIT_LIST(sl, ml, 1)
 
-		SIZE_LIST
+		SIZE_LIST(sl, ml)
 		sl.clear();
 		slRes << "max_size: " << sl.max_size() << std::endl;
 		ml.clear();
 		mlRes << "max_size: " << ml.max_size() << std::endl;
-		SIZE_LIST
+		SIZE_LIST(sl, ml)
 
 		ASSERT_EQUAL(slRes.str(), mlRes.str());
 	}
@@ -81,7 +81,7 @@ void unit_tests_modifers() {
 		std::stringstream slRes;
 		std::stringstream mlRes;
 
-		SIZE_LIST
+		SIZE_LIST(sl, ml)
 
 		sl.push_back(2);
 		ml.push_back(2);
@@ -90,13 +90,13 @@ void unit_tests_modifers() {
 		sl.push_front(14);
 		ml.push_front(14);
 		PRINT_L(sl, ml)
-		SIZE_LIST
+		SIZE_LIST(sl, ml)
 
 		sl.clear();
 		ml.clear();
 		PRINT_L(sl, ml)
 
-		SIZE_LIST
+		SIZE_LIST(sl, ml)
 
 		ASSERT_EQUAL(slRes.str(), mlRes.str());
 	}
@@ -107,7 +107,7 @@ void unit_tests_modifers() {
 		std::stringstream slRes;
 		std::stringstream mlRes;
 
-		SIZE_LIST
+		SIZE_LIST(sl, ml)
 
 		sl.push_back(2);
 		ml.push_back(2);
@@ -116,7 +116,7 @@ void unit_tests_modifers() {
 		sl.push_front(14);
 		ml.push_front(14);
 		PRINT_L(sl, ml)
-		SIZE_LIST
+		SIZE_LIST(sl, ml)
 
 		slRes << "front: " << sl.front() << std::endl;
 		mlRes << "front: " << ml.front() << std::endl;
@@ -128,7 +128,7 @@ void unit_tests_modifers() {
 		ml.pop_front();
 		ml.pop_front();
 
-		SIZE_LIST
+		SIZE_LIST(sl, ml)
 		ASSERT_EQUAL(slRes.str(), mlRes.str());
 	}
 }
