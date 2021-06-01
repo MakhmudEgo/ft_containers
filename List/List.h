@@ -411,7 +411,34 @@ namespace ft {
 
 		// ******************************		Operations		****************************** //
 
-//		void merge( list& other ) {}
+		void merge( list& other ) {
+			other._l_front = other._l_front->next;
+			Node *thisTmp = this->_l_front->next;
+
+			for ( ; thisTmp != _l_back ; /*thisTmp = thisTmp->next*/) {
+				if (*thisTmp->_data > *other._l_front->_data && other._l_front != other._l_back) {
+					Node *otherTmp = other._l_front->next;
+					push_prev(thisTmp, other._l_front);
+					other._l_front = otherTmp;
+//					thisTmp = thisTmp->next;
+				} else {
+					thisTmp = thisTmp->next;
+//					Node *otherTmp = other._l_front->next;
+//					push_next(thisTmp, other._l_front);
+//					other._l_front = otherTmp;
+				}
+			}
+			thisTmp = _l_back->prev;
+			while (other._l_front != other._l_back) {
+				Node *otherTmp = other._l_front->next;
+				push_next(thisTmp, other._l_front);
+				thisTmp = other._l_front;
+				other._l_front = otherTmp;
+			}
+			other._sz = 0;
+			other._l_front->next = other._l_back;
+			other._l_back->prev = other._l_front;
+		}
 
 //		template <class Compare>
 //		void merge( list& other, Compare comp );
@@ -423,6 +450,22 @@ namespace ft {
 		Node		*_l_front;
 		Node		*_l_back;
 		size_type	_sz;
+
+		void push_prev(Node *currentNode, Node *pushNode) {
+			currentNode->prev->next = pushNode;
+			pushNode->prev = currentNode->prev;
+			pushNode->next = currentNode;
+			currentNode->prev = pushNode;
+			++_sz;
+		}
+
+		void push_next(Node *currentNode, Node *pushNode) {
+			currentNode->next->prev = pushNode;
+			pushNode->prev = currentNode;
+			pushNode->next = currentNode->next;
+			currentNode->next = pushNode;
+			++_sz;
+		}
 	};
 
 }
