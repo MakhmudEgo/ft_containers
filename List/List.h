@@ -365,7 +365,11 @@ namespace ft {
 			}
 		}
 
-//		void splice( const_iterator pos, list& other, const_iterator it );
+		void splice( const_iterator pos, list& other, const_iterator it ) {
+			if ( other._sz ) {
+				// TODO: _-_
+			}
+		}
 
 //		void splice( const_iterator pos, list& other,
 //					 const_iterator first, const_iterator last);
