@@ -367,7 +367,7 @@ namespace ft {
 
 		void splice( const_iterator pos, list& other, const_iterator it ) {
 			if ( other._sz ) {
-				// TODO: _-_
+				Node *moveNode = it._i;
 			}
 		}
 
