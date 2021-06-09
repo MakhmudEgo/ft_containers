@@ -305,21 +305,12 @@ namespace ft {
 				push_back(value);
 			}
 		}
+
 		void		swap( list& other ) {
-			Allocator	tmp_alloc = _alloc;
-			Node		*tmp_l_front = _l_front;
-			Node		*tmp_l_back = _l_back;
-			size_type	tmp_sz = _sz;
-
-			this->_alloc = other._alloc;
-			this->_l_front = other._l_front;
-			this->_l_back = other._l_back;
-			this->_sz = other._sz;
-
-			other._alloc = tmp_alloc;
-			other._l_front = tmp_l_front;
-			other._l_back = tmp_l_back;
-			other._sz = tmp_sz;
+			myswap(this->_alloc, other._alloc);
+			myswap(this->_l_front, other._l_front);
+			myswap(this->_l_back, other._l_back);
+			myswap(this->_sz, other._sz);
 		}
 
 		// ******************************		Modifiers		****************************** //
@@ -368,6 +359,12 @@ namespace ft {
 		void splice( const_iterator pos, list& other, const_iterator it ) {
 			if ( other._sz ) {
 				Node *moveNode = it._i;
+				moveNode->prev->next = moveNode->next;
+				moveNode->prev = moveNode->prev;
+
+				push_prev(pos._i, moveNode);
+
+				--other._sz;
 			}
 		}
 
@@ -403,6 +400,13 @@ namespace ft {
 			l._sz = 0;
 			l._l_front->next = l._l_back;
 			l._l_back->prev = l._l_front;
+		}
+
+		template<typename U>
+		void		myswap(U& a, U& b) {
+			U tmp = a;
+			a = b;
+			b = tmp;
 		}
 	};
 
