@@ -5,7 +5,7 @@
 #pragma once
 
 template<typename T>
-std::ostream& PrintL(T& l, std::ostream& os) {
+std::ostream& PrintL(T& l, std::ostream& os = std::cout) {
 	typename T::iterator it = l.begin();
 	for (size_t i = 0; it != l.end() ; ++it, ++i) {
 		if (i) {

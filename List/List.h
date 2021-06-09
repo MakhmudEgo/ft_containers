@@ -96,7 +96,8 @@ namespace ft {
 		template< class InputIt >
 		list( InputIt			first,
 			  InputIt			last,
-			 const Allocator&	alloc = Allocator() )
+			  const Allocator&	alloc = Allocator(),
+			  typename enable_if<!std::is_integral<InputIt>::value>::type * = 0 )
 			 : _alloc(alloc),
 			  _l_front( new Node(_alloc.allocate( 1 ) ) ),
 			  _l_back( _l_front ),
@@ -136,6 +137,7 @@ namespace ft {
 				push_back( value );
 			}
 		}
+
 		template< class InputIt >
 		typename enable_if< !std::is_integral< InputIt >::value, void >::type
 		assign( InputIt first, InputIt last ) {
@@ -145,9 +147,7 @@ namespace ft {
 			}
 		}
 
-		allocator_type get_allocator() const {
-			return _alloc;
-		}
+		allocator_type get_allocator() const { return _alloc; }
 
 		// ******************************	Member functions	****************************** //
 
@@ -345,31 +345,47 @@ namespace ft {
 		}
 
 		void splice( const_iterator pos, list& other ) {
-			if ( other._sz ) {
-				Node *posNode = pos._i;
-				posNode->prev->next = other._l_front->next;
-				other._l_front->next->prev = posNode->prev;
-				other._l_back->prev->next = posNode;
-				posNode->prev = other._l_back->prev;
-				this->_sz += other._sz;
-				clearWithoutFree(other);
-			}
+			Node *posNode = pos._i;
+			posNode->prev->next = other._l_front->next;
+			other._l_front->next->prev = posNode->prev;
+			other._l_back->prev->next = posNode;
+			posNode->prev = other._l_back->prev;
+			this->_sz += other._sz;
+			clearWithoutFree(other);
 		}
 
 		void splice( const_iterator pos, list& other, const_iterator it ) {
-			if ( other._sz ) {
-				Node *moveNode = it._i;
-				moveNode->prev->next = moveNode->next;
-				moveNode->prev = moveNode->prev;
+			Node *moveNode = it._i;
+			moveNode->prev->next = moveNode->next;
+			moveNode->prev = moveNode->prev;
 
-				push_prev(pos._i, moveNode);
+			push_prev(pos._i, moveNode);
 
-				--other._sz;
-			}
+			--other._sz;
 		}
 
-//		void splice( const_iterator pos, list& other,
-//					 const_iterator first, const_iterator last);
+		void splice( const_iterator pos, list& other,
+					 const_iterator first, const_iterator last) {
+			Node* posNode = pos._i;
+			Node* firstNode = first._i;
+			Node* lastNode = last._i;
+			Node* lastPrevNode = lastNode->prev;
+
+			// correct other list
+			firstNode->prev->next = lastNode;
+			lastNode->prev = firstNode->prev;
+			size_t dist = myDist(first, last);
+			other._sz -= dist;
+
+			posNode->prev->next = firstNode;
+			firstNode->prev = posNode->prev;
+
+			lastPrevNode->next = posNode;
+			posNode->prev = lastPrevNode;
+
+			this->_sz += dist;
+		}
+
 		// ******************************		Operations		****************************** //
 
 	private:
@@ -377,6 +393,7 @@ namespace ft {
 		Node		*_l_front;
 		Node		*_l_back;
 		size_type	_sz;
+
 
 		void push_prev(Node *currentNode, Node *pushNode) {
 			currentNode->prev->next = pushNode;
@@ -407,6 +424,11 @@ namespace ft {
 			U tmp = a;
 			a = b;
 			b = tmp;
+		}
+		size_t myDist(const_iterator first, const_iterator last) {
+			size_t i = 0;
+			for ( ; first != last ; ++first, ++i);
+			return i;
 		}
 	};
 
