@@ -10,7 +10,7 @@
 #include "test_runner.h"
 #include "func_utils.hpp"
 
-void unit_tests_modifers() {
+void unit_tests_modifiers() {
 	{
 		std::list<int> sl;
 		ft::list<int> ml;

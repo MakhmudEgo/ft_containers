@@ -133,18 +133,14 @@ namespace ft {
 
 		void assign( size_type count, const T& value ) {
 			clear();
-			for ( size_type i = 0; i < count; ++i ) {
-				push_back( value );
-			}
+			for ( size_type i = 0; i < count; ++i, push_back( value ) );
 		}
 
 		template< class InputIt >
 		typename enable_if< !std::is_integral< InputIt >::value, void >::type
 		assign( InputIt first, InputIt last ) {
 			clear();
-			for ( ; first != last; ++first) {
-				push_back(*first);
-			}
+			for ( ; first != last; ++first, push_back(*first) );
 		}
 
 		allocator_type get_allocator() const { return _alloc; }
@@ -184,19 +180,7 @@ namespace ft {
 		// ******************************		Modifiers		****************************** //
 
 		void		clear() {
-			if ( _sz ) {
-				Node *clr = _l_front->next;
-				while ( clr != _l_back ) {
-					_alloc.destroy( clr->_data );
-					_alloc.deallocate( clr->_data, 1 );
-					Node *tmp = clr;
-					clr = clr->next;
-					delete tmp;
-				}
-				_l_front->next = _l_back;
-				_l_back->prev = _l_front;
-				_sz = 0;
-			}
+			for ( ; _sz; pop_back() );
 		}
 		iterator	insert( iterator pos, const T& value ) {
 			Node *newNode = new Node(_alloc.allocate(1));
@@ -231,11 +215,7 @@ namespace ft {
 			return res;
 		}
 		iterator	erase( iterator first, iterator last ) {
-			while ( first != last ) {
-				Node *tmp = first._i->next;
-				erase(first);
-				first = tmp;
-			}
+			for ( ; first != last; first = erase(first) );
 			return first;
 		}
 		void		push_back( const T& value ) {
@@ -305,12 +285,11 @@ namespace ft {
 				push_back(value);
 			}
 		}
-
 		void		swap( list& other ) {
-			myswap(this->_alloc, other._alloc);
-			myswap(this->_l_front, other._l_front);
-			myswap(this->_l_back, other._l_back);
-			myswap(this->_sz, other._sz);
+			mySwap(this->_alloc, other._alloc);
+			mySwap(this->_l_front, other._l_front);
+			mySwap(this->_l_back, other._l_back);
+			mySwap(this->_sz, other._sz);
 		}
 
 		// ******************************		Modifiers		****************************** //
@@ -343,8 +322,7 @@ namespace ft {
 			}
 			clearWithoutFree(other);
 		}
-
-		void splice( const_iterator pos, list& other ) {
+		void	splice( const_iterator pos, list& other ) {
 			Node *posNode = pos._i;
 			posNode->prev->next = other._l_front->next;
 			other._l_front->next->prev = posNode->prev;
@@ -353,8 +331,7 @@ namespace ft {
 			this->_sz += other._sz;
 			clearWithoutFree(other);
 		}
-
-		void splice( const_iterator pos, list& other, const_iterator it ) {
+		void	splice( const_iterator pos, list& other, const_iterator it ) {
 			Node *moveNode = it._i;
 			moveNode->prev->next = moveNode->next;
 			moveNode->prev = moveNode->prev;
@@ -363,8 +340,7 @@ namespace ft {
 
 			--other._sz;
 		}
-
-		void splice( const_iterator pos, list& other,
+		void	splice( const_iterator pos, list& other,
 					 const_iterator first, const_iterator last) {
 			Node* posNode = pos._i;
 			Node* firstNode = first._i;
@@ -384,6 +360,27 @@ namespace ft {
 			posNode->prev = lastPrevNode;
 
 			this->_sz += dist;
+		}
+		void	remove( const T& value ) {
+			Node* curr = _l_front->next;
+
+			while ( curr != _l_back ) {
+				if (*curr->_data == value) {
+					curr = erase(curr)._i;
+				} else {
+					curr = curr->next;
+				}
+			}
+		}
+		template< class UnaryPredicate >
+		void	remove_if( UnaryPredicate p ) {
+			for ( Node* curr = _l_front->next; curr != _l_back; ) {
+				if (p(*curr->_data)) {
+					curr = erase(curr)._i;
+				} else{
+					curr = curr->next;
+				}
+			}
 		}
 
 		// ******************************		Operations		****************************** //
@@ -411,7 +408,7 @@ namespace ft {
 			++_sz;
 		}
 
-		static bool comp_merge(T a, T b) { return (a > b); }
+		static bool comp_merge(const T& a, const T& b) { return (a > b); }
 
 		static void clearWithoutFree( list& l ) {
 			l._sz = 0;
@@ -420,7 +417,7 @@ namespace ft {
 		}
 
 		template<typename U>
-		void		myswap(U& a, U& b) {
+		void		mySwap(U& a, U& b) {
 			U tmp = a;
 			a = b;
 			b = tmp;
