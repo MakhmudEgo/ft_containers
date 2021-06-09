@@ -45,5 +45,49 @@ void unit_tests_splice_list() {
 		ASSERT_EQUAL(slRes.str(), mlRes.str());
 	}
 
+	{
+		std::list<int> sl(1);
+		ft::list<int> ml(1);
+		std::stringstream slRes;
+		std::stringstream mlRes;
+
+		std::list<int> sl1(4);
+		ft::list<int> ml1(4);
+
+		PRINT_L(sl, ml)
+		PRINT_L(sl1, ml1)
+
+		sl.splice(sl.begin(), sl1, sl1.begin());
+		ml.splice(ml.begin(), ml1, ml1.begin());
+
+		PRINT_L(sl, ml)
+		PRINT_L(sl1, ml1)
+		SIZE_LIST(sl, ml)
+		SIZE_LIST(sl1, ml1)
+		ASSERT_EQUAL(slRes.str(), mlRes.str());
+	}
+
+	{
+		std::list<int> sl;
+		ft::list<int> ml;
+		std::stringstream slRes;
+		std::stringstream mlRes;
+
+		std::list<int> sl1(4);
+		ft::list<int> ml1(4);
+
+		PRINT_L(sl, ml)
+		PRINT_L(sl1, ml1)
+
+		sl.splice(sl.begin(), sl1, sl1.begin());
+		ml.splice(ml.begin(), ml1, ml1.begin());
+
+		PRINT_L(sl, ml)
+		PRINT_L(sl1, ml1)
+		SIZE_LIST(sl, ml)
+		SIZE_LIST(sl1, ml1)
+		ASSERT_EQUAL(slRes.str(), mlRes.str());
+	}
+
 
 }

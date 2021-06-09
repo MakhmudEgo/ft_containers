@@ -10,6 +10,7 @@
 #include "unit_tests_splice_list.hpp"
 #include "unit_tests_resize_list.hpp"
 #include "unit_tests_merge_list.hpp"
+#include "unit_tests_swap_list.hpp"
 #include "unit_tests_iter.hpp"
 #include "test_runner.h"
 #include "func_utils.hpp"
@@ -23,5 +24,6 @@ int main() {
 //		tr.RunTest(unit_tests_resize_list, "resize");
 //		tr.RunTest(unit_tests_merge_list, "unit_tests_merge_list");
 		tr.RunTest(unit_tests_splice_list, "unit_tests_splice_list");
+//		tr.RunTest(unit_tests_swap_list, "unit_tests_swap_list");
 	}
 }
