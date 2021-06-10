@@ -7,6 +7,7 @@
 #include <numeric>
 #include "unit_tests_modifiers.hpp"
 #include "unit_tests_insert_and_erase_list.hpp"
+#include "unit_tests_list_reverse_iterator.hpp"
 #include "unit_tests_list_cmp_oper.hpp"
 #include "unit_tests_reverse_list.hpp"
 #include "unit_tests_splice_list.hpp"
@@ -35,5 +36,6 @@ int main() {
 		tr.RunTest(unit_tests_unique_list, "unit_tests_unique_list");
 		tr.RunTest(unit_tests_sort_list, "unit_tests_sort_list");
 		tr.RunTest(unit_tests_list_cmp_oper, "unit_tests_list_cmp_oper");
+		tr.RunTest(unit_tests_list_reverse_iterator, "unit_tests_list_reverse_iterator");
 	}
 }

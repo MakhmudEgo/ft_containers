@@ -10,7 +10,7 @@
 #include "test_runner.h"
 #include "func_utils.hpp"
 
-void unit_tests_iter() {
+void unit_tests_list_reverse_iterator() {
 	{
 		std::list<int> sl;
 		ft::list<int> ml;
@@ -24,12 +24,11 @@ void unit_tests_iter() {
 		ml.push_back(41);
 		ml.push_back(34);
 
-		std::list<int> sl1(sl.begin(), sl.end());
-		ft::list<int> ml1(ml.begin(), ml.end());
+		std::list<int> sl1(sl.rbegin(), sl.rend());
+		ft::list<int> ml1(ml.rbegin(), ml.rend());
 
 		PRINT_L(sl, ml)
 		PRINT_L(sl1, ml1)
-
 		ASSERT_EQUAL(slRes.str(), mlRes.str());
 	}
 
@@ -48,8 +47,8 @@ void unit_tests_iter() {
 		SIZE_LIST(sl, ml)
 		PRINT_L(sl, ml)
 
-		std::list<int>::iterator slIt = sl.begin();
-		ft::list<int>::iterator mlIt = ml.begin();
+		std::list<int>::reverse_iterator slIt = sl.rbegin();
+		ft::list<int>::reverse_iterator mlIt = ml.rbegin();
 
 		++slIt;
 		++mlIt;
@@ -75,8 +74,8 @@ void unit_tests_iter() {
 		SIZE_LIST(sl, ml)
 		PRINT_L(sl, ml)
 
-		std::list<int>::iterator slIt = sl.begin();
-		ft::list<int>::iterator mlIt = ml.begin();
+		std::list<int>::reverse_iterator slIt = sl.rbegin();
+		ft::list<int>::reverse_iterator mlIt = ml.rbegin();
 
 		++slIt;
 		++mlIt;
