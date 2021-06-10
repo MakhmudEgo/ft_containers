@@ -11,6 +11,7 @@ include_directories(.
         Vector/unit_tests_vector
         List
         List/unit_tests_list
+        Utils
         )
 
 add_executable(ft_containers

@@ -9,14 +9,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <limits>
-
-template< bool B, class T = void >
-struct enable_if { };
-
-template< class T >
-struct enable_if< true, T > {
-	typedef T type;
-};
+#include "Utils.h"
 
 namespace ft {
 	template<
@@ -86,7 +79,7 @@ namespace ft {
 		template< typename InputIt >
 		vector( InputIt first, InputIt last,
 		 const Allocator &alloc = Allocator(),
-		 typename enable_if<!std::is_integral<InputIt>::value>::type * = 0 )
+		 typename Utils::enable_if<!std::is_integral<InputIt>::value>::type * = 0 )
 		 : _v( 0x0 ), _alloc( alloc ), _sz( 0 ), _cp( 0 ) {
 			assign( first, last );
 		}
@@ -103,7 +96,7 @@ namespace ft {
 		void	assign( size_type count, const T& value ) { default_init( count, value ); }
 
 		template< typename InputIt >
-		typename enable_if< !std::is_integral< InputIt >::value, void >::type
+		typename Utils::enable_if< !std::is_integral< InputIt >::value, void >::type
 		assign( InputIt first, InputIt last ) {
 			size_type n = my_dist( first, last );
 			reserve( n );
@@ -277,7 +270,7 @@ namespace ft {
 			}
 		}
 		template< class InputIt >
-		typename enable_if< !std::is_integral< InputIt >::value, void >::type
+		typename Utils::enable_if< !std::is_integral< InputIt >::value, void >::type
 		insert( iterator pos, InputIt first, InputIt last ) {
 			size_t count = my_dist(first, last);
 			size_type i = 0;
@@ -374,33 +367,6 @@ namespace ft {
 
 	// ******************************	vector<bool>		****************************** //
 
-	enum Comparison {
-		Less,
-		Equal,
-	};
-
-	template<class InputIt1, class InputIt2>
-	bool cmp(InputIt1 first1, InputIt1 last1,
-			 InputIt2 first2, InputIt2 last2,
-			 ft::Comparison cmp)
-	{
-		for ( ; (first1 != last1) && (first2 != last2); first1++, first2++ ) {
-			switch (cmp) {
-				case ft::Less:
-					if (*first1 != *first2) return ( *first1 > *first2 );
-					break;
-				case ft::Equal:
-					if (*first1 != *first2) return false;
-					break;
-			}
-		}
-		switch (cmp) {
-			case ft::Less:
-				return (first1 != last1);
-			case ft::Equal:
-				return (first1 == last2 && first2 == last2);
-		}
-	}
 }
 
 // ******************************	Non-member functions	****************************** //
@@ -408,19 +374,19 @@ namespace ft {
 template< class T>
 bool operator==( const ft::vector<T>& lhs,
 				 const ft::vector<T>& rhs ) {
-	return ft::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), ft::Equal);
+	return Utils::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), Utils::Equal);
 }
 
 template< class T, class Alloc >
 bool operator!=( const ft::vector<T,Alloc>& lhs,
 				 const ft::vector<T,Alloc>& rhs ) {
-	return !ft::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), ft::Equal);
+	return !Utils::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), Utils::Equal);
 }
 
 template< class T, class Alloc >
 bool operator>( const ft::vector<T,Alloc>& lhs,
 				const ft::vector<T,Alloc>& rhs ) {
-	return ft::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), ft::Less);
+	return Utils::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), Utils::Less);
 }
 
 template< class T, class Alloc >
