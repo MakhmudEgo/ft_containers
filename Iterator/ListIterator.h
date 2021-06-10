@@ -77,4 +77,73 @@ namespace ft {
 		const_reference	operator*() const { return *this->_i->_data; }
 	};
 
+	//  ****************** Reverse ******************  //
+
+	template< class T, class Node >
+	class ReverseListIterator : public Iterator< Node > {
+	public:
+		friend class list<T>;
+		typedef					T value_type;
+		typedef std::ptrdiff_t	difference_type;
+		typedef T*				pointer;
+		typedef T&				reference;
+		typedef const T&		const_reference;
+		ReverseListIterator( Node *node )
+				: Iterator< Node >( node ) {}
+		ReverseListIterator( const ReverseListIterator< T, Node > &other )
+				: Iterator< Node >( other ) {}
+		ReverseListIterator( const Iterator< Node > &other )
+				: Iterator< Node >( other ) {}
+
+		reference		operator*() { return *this->_i->_data; }
+		const_reference	operator*() const { return *this->_i->_data; }
+
+		// ***** post inc ***** //
+		ReverseListIterator	operator++( int ) {
+			ReverseListIterator< T, Node > res( this->_i );
+			this->_i = this->_i->prev;
+			return res;
+		}
+
+		// ***** pre inc ***** //
+		ReverseListIterator&	operator++() {
+			this->_i = this->_i->prev;
+			return *this;
+		}
+
+		// ***** post dec ***** //
+		ReverseListIterator	operator--( int ) {
+			ReverseListIterator< T, Node > res( this->_i );
+			this->_i = this->_i->next;
+			return res;
+		}
+
+		// ***** pre dec ***** //
+		ReverseListIterator	&operator--() {
+			this->_i = this->_i->next;
+			return *this;
+		}
+
+		bool			operator==( const ReverseListIterator< T, Node > &other ) { return this->_i->_data == other._i->_data; }
+		bool			operator!=(const ReverseListIterator &other) { return this->_i->_data != other._i->_data; }
+	};
+
+	template< class T, class Node >
+	class ConstReverseListIterator : public ReverseListIterator< T, Node > {
+	public:
+		typedef T				value_type;
+		typedef std::ptrdiff_t	difference_type;
+		typedef T*				pointer;
+		typedef T&				reference;
+		typedef const T&		const_reference;
+
+		ConstReverseListIterator( Node *node )
+				: ReverseListIterator<T, Node>( node ) {}
+		ConstReverseListIterator( const ConstReverseListIterator< T, Node > &other )
+				: ReverseListIterator<T, Node>(other) {}
+		ConstReverseListIterator( const Iterator< Node > &other )
+				: ReverseListIterator<T, Node>(other) {}
+
+		const_reference	operator*() const { return *this->_i->_data; }
+	};
 }
