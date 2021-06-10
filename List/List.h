@@ -8,14 +8,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <limits>
-
-template< bool B, class T = void >
-struct enable_if { };
-
-template< class T >
-struct enable_if< true, T > {
-	typedef T type;
-};
+#include "Utils.h"
 
 namespace ft {
 	template< class T, class Node >
@@ -97,7 +90,7 @@ namespace ft {
 		list( InputIt			first,
 			  InputIt			last,
 			  const Allocator&	alloc = Allocator(),
-			  typename enable_if<!std::is_integral<InputIt>::value>::type * = 0 )
+			  typename Utils::enable_if<!std::is_integral<InputIt>::value>::type * = 0 )
 			 : _alloc(alloc),
 			  _l_front( new Node(_alloc.allocate( 1 ) ) ),
 			  _l_back( _l_front ),
@@ -137,7 +130,7 @@ namespace ft {
 		}
 
 		template< class InputIt >
-		typename enable_if< !std::is_integral< InputIt >::value, void >::type
+		typename Utils::enable_if< !std::is_integral< InputIt >::value, void >::type
 		assign( InputIt first, InputIt last ) {
 			clear();
 			for ( ; first != last; ++first, push_back(*first) );
@@ -197,7 +190,7 @@ namespace ft {
 			}
 		}
 		template< class InputIt >
-		typename enable_if< !std::is_integral< InputIt >::value, void >::type
+		typename Utils::enable_if< !std::is_integral< InputIt >::value, void >::type
 		insert( iterator pos, InputIt first, InputIt last ) {
 			for ( ; first != last; ++first) {
 				insert(pos, *first);
@@ -453,7 +446,6 @@ namespace ft {
 		}
 
 	};
-
 }
 
 // ******************************		Non-member functions		****************************** //
@@ -463,4 +455,43 @@ void swap( ft::list<T,Alloc>& lhs,
 		   ft::list<T,Alloc>& rhs ) {
 	lhs.swap(rhs);
 }
+
+template< class T>
+bool operator==( const ft::list<T>& lhs,
+				 const ft::list<T>& rhs ) {
+	return Utils::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), Utils::Equal);
+}
+
+template< class T, class Alloc >
+bool operator!=( const ft::list<T,Alloc>& lhs,
+				 const ft::list<T,Alloc>& rhs ) {
+	return !Utils::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), Utils::Equal);
+}
+
+template< class T, class Alloc >
+bool operator>( const ft::list<T,Alloc>& lhs,
+				const ft::list<T,Alloc>& rhs ) {
+	return Utils::cmp(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), Utils::Less);
+}
+
+template< class T, class Alloc >
+bool operator<( const ft::list<T,Alloc>& lhs,
+				const ft::list<T,Alloc>& rhs ) {
+	return !(lhs > rhs) && lhs != rhs;
+}
+
+template< class T, class Alloc >
+bool operator<=( const ft::list<T,Alloc>& lhs,
+				 const ft::list<T,Alloc>& rhs ) {
+	return lhs < rhs || lhs == rhs;
+}
+
+template< class T, class Alloc >
+bool operator>=( const ft::list<T,Alloc>& lhs,
+				 const ft::list<T,Alloc>& rhs ) {
+	return lhs > rhs || lhs == rhs;
+}
+
+// ******************************		Non-member functions		****************************** //
+
 #include "ListIterator.h"
