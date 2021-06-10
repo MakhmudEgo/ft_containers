@@ -223,16 +223,7 @@ namespace ft {
 
 			_new_node->_data = _alloc.allocate( 1 );
 			_alloc.construct( _new_node->_data, value );
-			_new_node->next = _l_back;
-			_new_node->prev = _l_back->prev;
-
-			if ( !_sz ) {
-				_l_front->next = _new_node;
-			} else {
-				_l_back->prev->next = _new_node;
-			}
-			_l_back->prev = _new_node;
-			++_sz;
+			push_next(this->_l_back->prev, _new_node);
 		}
 		void		pop_back() {
 			if ( _sz ) {
@@ -251,16 +242,7 @@ namespace ft {
 
 			_new_node->_data = _alloc.allocate( 1 );
 			_alloc.construct( _new_node->_data, value );
-			_new_node->next = _l_front->next;
-			_new_node->prev = _l_front;
-
-			if ( !_sz ) {
-				_l_back->prev = _new_node;
-			} else {
-				_l_front->next->prev = _new_node;
-			}
-			_l_front->next = _new_node;
-			++_sz;
+			push_prev(_l_front->next, _new_node);
 		}
 		void		pop_front() {
 			if ( _sz ) {
@@ -281,9 +263,7 @@ namespace ft {
 				erase(iterator(tmp), end());
 				return;
 			}
-			for (size_type i = _sz; i < count; ++i) {
-				push_back(value);
-			}
+			for (size_type i = _sz; i < count; ++i, push_back(value) );
 		}
 		void		swap( list& other ) {
 			mySwap(this->_alloc, other._alloc);
