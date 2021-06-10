@@ -284,7 +284,7 @@ namespace ft {
 			Node *thisTmp = this->_l_front->next;
 
 			while ( thisTmp != _l_back ) {
-				if (comp(*thisTmp->_data, *other._l_front->_data)
+				if (!comp(*thisTmp->_data, *other._l_front->_data)
 					&& other._l_front != other._l_back) {
 					Node *otherTmp = other._l_front->next;
 					push_prev(thisTmp, other._l_front);
@@ -397,15 +397,14 @@ namespace ft {
 		size_type	_sz;
 
 
-		void push_prev(Node *currentNode, Node *pushNode) {
+		void		push_prev(Node *currentNode, Node *pushNode) {
 			currentNode->prev->next = pushNode;
 			pushNode->prev = currentNode->prev;
 			pushNode->next = currentNode;
 			currentNode->prev = pushNode;
 			++_sz;
 		}
-
-		void push_next(Node *currentNode, Node *pushNode) {
+		void		push_next(Node *currentNode, Node *pushNode) {
 			currentNode->next->prev = pushNode;
 			pushNode->prev = currentNode;
 			pushNode->next = currentNode->next;
@@ -413,10 +412,10 @@ namespace ft {
 			++_sz;
 		}
 
-		static bool comp_merge(const T& a, const T& b) { return (a > b); }
-		static bool comp_unique(const T& a, const T& b) { return (a == b); }
+		static bool	comp_merge(const T& a, const T& b) { return (a < b); }
+		static bool	comp_unique(const T& a, const T& b) { return (a == b); }
 
-		static void clearWithoutFree( list& l ) {
+		static void	clearWithoutFree( list& l ) {
 			l._sz = 0;
 			l._l_front->next = l._l_back;
 			l._l_back->prev = l._l_front;
@@ -428,12 +427,14 @@ namespace ft {
 			a = b;
 			b = tmp;
 		}
-		size_t myDist(const_iterator first, const_iterator last) {
+
+		size_t		myDist(const_iterator first, const_iterator last) {
 			size_t i = 0;
 			for ( ; first != last ; ++first, ++i);
 			return i;
 		}
-		list getSecondPartList(list& list) {
+
+		list		getSecondPartList(list& list) {
 			ft::list<T> res;
 			Node* curr = list._l_front->next;
 			for ( size_type i = 0; i < list._sz / 2; ++i, curr = curr->next);
@@ -441,7 +442,7 @@ namespace ft {
 			return res;
 		}
 		template< class Compare >
-		void mySort(list& list, Compare comp) {
+		void		mySort(list& list, Compare comp) {
 			if (list.size() > 1) {
 				ft::list<T> list1 = getSecondPartList(list);
 				mySort(list, comp);
