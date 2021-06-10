@@ -15,6 +15,10 @@ namespace ft {
 	class ListIterator;
 	template< class T, class Node >
 	class ConstListIterator;
+	template< class T, class Node >
+	class ReverseListIterator;
+	template< class T, class Node >
+	class ConstReverseListIterator;
 
 	template<
 			class T,
@@ -48,10 +52,10 @@ namespace ft {
 		typedef typename Allocator::const_reference	const_reference;
 		typedef typename Allocator::pointer			pointer;
 		typedef typename Allocator::const_pointer	const_pointer;
-		typedef ListIterator<T, Node>				iterator;
-		typedef ConstListIterator<T, Node>			const_iterator;
-//		typedef ... reverse_iterator
-//		typedef ... const_reverse_iterator
+		typedef ListIterator< T, Node >				iterator;
+		typedef ConstListIterator< T, Node >		const_iterator;
+		typedef ReverseListIterator< T, Node >		reverse_iterator;
+		typedef ConstReverseListIterator< T, Node >	const_reverse_iterator;
 
 		// ******************************	Member functions	****************************** //
 
@@ -153,10 +157,14 @@ namespace ft {
 
 		// ******************************		Iterators		****************************** //
 
-		iterator 		begin() { return ( _l_front->next ); }
-		const_iterator	begin() const { return ( _l_front->next ); }
-		iterator		end() { return ( _l_back ); }
-		const_iterator	end() const { return ( _l_back ); }
+		iterator 				begin() { return ( _l_front->next ); }
+		const_iterator			begin() const { return ( _l_front->next ); }
+		iterator				end() { return ( _l_back ); }
+		const_iterator			end() const { return ( _l_back ); }
+		reverse_iterator		rbegin() { return ( _l_back->prev ); }
+		const_reverse_iterator	rbegin() const { return ( _l_back->prev ); }
+		reverse_iterator		rend() { return ( _l_front ); }
+		const_reverse_iterator	rend() const { return ( _l_front ); }
 
 		// ******************************		Iterators		****************************** //
 
