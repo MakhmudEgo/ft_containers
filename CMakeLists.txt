@@ -12,6 +12,7 @@ include_directories(.
         List
         List/unit_tests_list
         Utils
+        Map
         )
 
 add_executable(ft_containers
@@ -27,6 +28,10 @@ add_executable(Vector
 
 add_executable(List
         List/main.cpp
+        )
+
+add_executable(Map
+        Map/main.cpp
         )
 #
 #add_executable(testiter
