@@ -68,7 +68,7 @@ namespace ft {
 		typedef const T&		const_reference;
 
 		ConstListIterator( Node *node )
-				: Iterator< Node >( node ) {}
+				: ListIterator<T, Node>( node ) {}
 		ConstListIterator( const ConstListIterator< T, Node > &other )
 				: ListIterator<T, Node>(other) {}
 		ConstListIterator( const Iterator< Node > &other )
