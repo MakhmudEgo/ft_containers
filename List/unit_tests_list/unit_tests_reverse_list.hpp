@@ -101,5 +101,58 @@ void unit_tests_reverse_list() {
 		ASSERT_EQUAL(slRes.str(), mlRes.str());
 	}
 
+	{
+		std::list<int> sl(2);
+		ft::list<int> ml(2);
+		std::stringstream slRes;
+		std::stringstream mlRes;
+
+		INIT_LIST(sl, ml, 10)
+		slRes << "before: ";
+		mlRes << "before: ";
+		SIZE_LIST(sl, ml)
+		PRINT_L(sl, ml)
+
+		sl.erase(sl.begin());
+		ml.erase(ml.begin());
+
+		sl.insert(sl.end(), 13);
+		ml.insert(ml.end(), 13);
+
+		slRes << "after: ";
+		mlRes << "after: ";
+		sl.reverse();
+		ml.reverse();
+		SIZE_LIST(sl, ml)
+		PRINT_L(sl, ml)
+
+		ASSERT_EQUAL(slRes.str(), mlRes.str());
+	}
+
+	{
+		std::list<int> sl(2);
+		ft::list<int> ml(2);
+		std::stringstream slRes;
+		std::stringstream mlRes;
+
+		INIT_LIST(sl, ml, 10)
+		slRes << "before: ";
+		mlRes << "before: ";
+		SIZE_LIST(sl, ml)
+		PRINT_L(sl, ml)
+
+		sl.clear();
+		ml.clear();
+
+		slRes << "after: ";
+		mlRes << "after: ";
+		sl.reverse();
+		ml.reverse();
+		SIZE_LIST(sl, ml)
+		PRINT_L(sl, ml)
+
+		ASSERT_EQUAL(slRes.str(), mlRes.str());
+	}
+
 
 }
