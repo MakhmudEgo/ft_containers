@@ -121,7 +121,7 @@ namespace ft {
 		}
 
 		list& operator=( const list& other ) {
-			if (this != other) {
+			if (this != &other) {
 				this->clear();
 				list::iterator it = other.begin();
 				for (; it != end() ; ++it) {
@@ -369,11 +369,9 @@ namespace ft {
 				mySwap( _l_back->prev, _l_back->next );
 			}
 		}
-		void	unique() {
-			unique(comp_unique);
-		}
+		void	unique() { unique( comp_unique ); }
 		template< class BinaryPredicate >
-		void unique( BinaryPredicate p ) {
+		void	unique( BinaryPredicate p ) {
 			if ( _sz > 1 ) {
 				for ( Node *curr = _l_front->next->next; curr != _l_back; ) {
 					Node *prevNode = curr->prev;
@@ -385,6 +383,11 @@ namespace ft {
 				}
 			}
 		}
+		void	sort() { mySort( *this, comp_merge ); }
+		template< class Compare >
+		void	sort( Compare comp ) { mySort( *this, comp ); }
+
+
 		// ******************************		Operations		****************************** //
 
 	private:
@@ -430,6 +433,24 @@ namespace ft {
 			for ( ; first != last ; ++first, ++i);
 			return i;
 		}
+		list getSecondPartList(list& list) {
+			ft::list<T> res;
+			Node* curr = list._l_front->next;
+			for ( size_type i = 0; i < list._sz / 2; ++i, curr = curr->next);
+			res.splice(res.begin(), list, const_iterator(curr), list.end());
+			return res;
+		}
+		template< class Compare >
+		void mySort(list& list, Compare comp) {
+			if (list.size() > 1) {
+				ft::list<T> list1 = getSecondPartList(list);
+				mySort(list, comp);
+				mySort(list1, comp);
+
+				list.merge(list1, comp);
+			}
+		}
+
 	};
 
 }
