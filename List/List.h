@@ -369,7 +369,22 @@ namespace ft {
 				mySwap( _l_back->prev, _l_back->next );
 			}
 		}
-
+		void	unique() {
+			if ( _sz > 1 ) {
+				for ( Node *curr = _l_front->next->next; curr != _l_back; ) {
+					Node *prevNode = curr->prev;
+					if (*curr->_data == *prevNode->_data) {
+						curr = erase(curr)._i;
+					} else {
+						curr = curr->next;
+					}
+				}
+			}
+		}
+//		template< class BinaryPredicate >
+//		void unique( BinaryPredicate p ) {
+//
+//		}
 		// ******************************		Operations		****************************** //
 
 	private:
