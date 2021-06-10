@@ -370,10 +370,14 @@ namespace ft {
 			}
 		}
 		void	unique() {
+			unique(comp_unique);
+		}
+		template< class BinaryPredicate >
+		void unique( BinaryPredicate p ) {
 			if ( _sz > 1 ) {
 				for ( Node *curr = _l_front->next->next; curr != _l_back; ) {
 					Node *prevNode = curr->prev;
-					if (*curr->_data == *prevNode->_data) {
+					if (p(*curr->_data, *prevNode->_data)) {
 						curr = erase(curr)._i;
 					} else {
 						curr = curr->next;
@@ -381,10 +385,6 @@ namespace ft {
 				}
 			}
 		}
-//		template< class BinaryPredicate >
-//		void unique( BinaryPredicate p ) {
-//
-//		}
 		// ******************************		Operations		****************************** //
 
 	private:
@@ -411,6 +411,7 @@ namespace ft {
 		}
 
 		static bool comp_merge(const T& a, const T& b) { return (a > b); }
+		static bool comp_unique(const T& a, const T& b) { return (a == b); }
 
 		static void clearWithoutFree( list& l ) {
 			l._sz = 0;
