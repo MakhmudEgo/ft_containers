@@ -362,6 +362,13 @@ namespace ft {
 				}
 			}
 		}
+		void	reverse() {
+			if ( _sz > 1 ) {
+				for ( Node* curr = _l_front->next; curr != _l_back;
+					mySwap( curr->prev, curr->next ), curr = curr->prev );
+				mySwap( _l_back->prev, _l_back->next );
+			}
+		}
 
 		// ******************************		Operations		****************************** //
 
